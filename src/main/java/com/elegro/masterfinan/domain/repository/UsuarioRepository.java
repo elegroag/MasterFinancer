@@ -1,4 +1,4 @@
-package com.elegro.masterfinan.domain.manager_repository;
+package com.elegro.masterfinan.domain.repository;
 
 import com.elegro.masterfinan.infraestructura.cruds.UsuarioDaoRepository;
 import com.elegro.masterfinan.infraestructura.dao.MysqlConnector;
@@ -64,20 +64,20 @@ public class UsuarioRepository implements UsuarioDaoRepository {
     }
 
     @Override
-    public void insert(Usuario user) throws DaoException {
+    public void insert(Usuario use) throws DaoException {
         Connection conn = null;
         PreparedStatement stmt = null;
         try {
             conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
             stmt = conn.prepareStatement(SQl_INSERT);
             try {
-                stmt.setLong(1, user.getId());
-                stmt.setString(2, user.getNombres());
-                stmt.setString(3, user.getApellidos());
-                stmt.setString(4, user.getUsername());
-                stmt.setString(5, user.getPassword());
-                stmt.setDouble(6, user.getSaldo());
-                stmt.setInt(7, user.getTipoIdentificacion());
+                stmt.setLong(1, use.getId());
+                stmt.setString(2, use.getNombres());
+                stmt.setString(3, use.getApellidos());
+                stmt.setString(4, use.getUsername());
+                stmt.setString(5, use.getPassword());
+                stmt.setDouble(6, use.getSaldo());
+                stmt.setInt(7, use.getTipoIdentificacion());
                 stmt.executeUpdate();
             } catch (SQLException ex) {
                 throw new DaoException("Error de sql", ex);

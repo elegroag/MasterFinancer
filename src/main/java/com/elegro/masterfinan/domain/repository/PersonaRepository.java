@@ -1,11 +1,17 @@
-package com.elegro.masterfinan.domain.manager_repository;
+package com.elegro.masterfinan.domain.repository;
 
 import com.elegro.masterfinan.infraestructura.cruds.PersonaDaoRepository;
 import com.elegro.masterfinan.infraestructura.entity.Persona;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class PersonaRepository implements PersonaDaoRepository {
+
+    protected  Connection connectionTransactional;
+    public PersonaRepository(Connection conn){
+        this.connectionTransactional = conn;
+    }
 
     @Override
     public List<Persona> findAll() {
