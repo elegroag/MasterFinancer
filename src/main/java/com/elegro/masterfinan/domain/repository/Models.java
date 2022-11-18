@@ -7,16 +7,16 @@ import com.elegro.masterfinan.infraestructura.dao.MysqlConnector;
 
 import java.sql.SQLException;
 
-public class Mediator extends ManagerRepository {
+public class Models extends ManagerRepository {
 
-    public Mediator() throws SQLException {
+    public Models() throws SQLException {
         if(this.conn == null) {
             this.conn = MysqlConnector.getConnection();
         }
     }
 
     @Override
-    public UsuarioDaoRepository getUsuario() {
+    public UsuarioDaoRepository entityUsuario() {
         if(usuarios == null){
             usuarios = new UsuarioRepository(conn);
         }
@@ -24,7 +24,7 @@ public class Mediator extends ManagerRepository {
     }
 
     @Override
-    public PersonaDaoRepository getPersona() {
+    public PersonaDaoRepository entityPersona() {
         if(personas == null){
             personas = new PersonaRepository(conn);
         }
@@ -32,7 +32,7 @@ public class Mediator extends ManagerRepository {
     }
 
     @Override
-    public CompraDaoRepository getCompra() {
+    public CompraDaoRepository entityCompra() {
         if(compras == null){
             compras = new CompraRepository(conn);
         }

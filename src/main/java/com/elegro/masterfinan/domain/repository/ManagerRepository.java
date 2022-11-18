@@ -12,9 +12,9 @@ abstract class ManagerRepository {
     protected PersonaDaoRepository personas = null;
     protected CompraDaoRepository compras = null;
 
-    public abstract UsuarioDaoRepository getUsuario();
-    public abstract PersonaDaoRepository getPersona();
-    public abstract CompraDaoRepository getCompra();
+    public abstract UsuarioDaoRepository entityUsuario();
+    public abstract PersonaDaoRepository entityPersona();
+    public abstract CompraDaoRepository entityCompra();
 
     protected Connection conn;
 }
