@@ -2,6 +2,7 @@ package com.elegro.masterfinan.domain.repository;
 
 import com.elegro.masterfinan.infraestructura.cruds.CompraDaoRepository;
 import com.elegro.masterfinan.infraestructura.cruds.PersonaDaoRepository;
+import com.elegro.masterfinan.infraestructura.cruds.TransaccionDaoRepository;
 import com.elegro.masterfinan.infraestructura.cruds.UsuarioDaoRepository;
 import com.elegro.masterfinan.infraestructura.dao.MysqlConnector;
 
@@ -37,5 +38,13 @@ public class Models extends ManagerRepository {
             compras = new CompraRepository(conn);
         }
         return compras;
+    }
+
+    @Override
+    public TransaccionDaoRepository entityTransaccion() {
+       if(transacciones == null){
+           transacciones = new TransaccionRepository(conn);
+       }
+       return transacciones;
     }
 }
