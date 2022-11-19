@@ -4,9 +4,14 @@ import com.elegro.masterfinan.infraestructura.entity.cruds.PagoDaoRepository;
 import com.elegro.masterfinan.infraestructura.entity.Pago;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class PagoRepository implements PagoDaoRepository {
+    public PagoRepository(Connection conn) {
+
+    }
+
     @Override
     public List<Pago> findAll() throws DaoException {
         return null;

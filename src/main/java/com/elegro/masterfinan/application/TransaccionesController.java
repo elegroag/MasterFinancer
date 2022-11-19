@@ -25,25 +25,25 @@ public class TransaccionesController {
     }
 
     @GetMapping("/crear")
-    public String crearTransaction(){
+    public String crear(){
         transaccionService.crea();
         return "";
     }
 
     @GetMapping("/borrar")
-    public String borrarTransaccion(){
+    public String borrar(){
         transaccionService.borra();
         return "";
     }
 
     @GetMapping("/actualizar")
-    public String actualizaTransaccion(){
+    public String actualiza(){
         transaccionService.actualiza();
         return "";
     }
 
     @GetMapping("/buscar")
-    public String buscarTransaccion(){
+    public String buscar(){
         transaccionService.busca();
         return "";
     }

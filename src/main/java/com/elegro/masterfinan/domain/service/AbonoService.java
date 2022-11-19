@@ -3,5 +3,5 @@ package com.elegro.masterfinan.domain.service;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PersonaService {
+public class AbonoService {
 }

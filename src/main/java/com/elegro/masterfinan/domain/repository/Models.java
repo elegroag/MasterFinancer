@@ -1,6 +1,5 @@
 package com.elegro.masterfinan.domain.repository;
 
-import com.elegro.masterfinan.infraestructura.cruds.*;
 import com.elegro.masterfinan.infraestructura.dao.MysqlConnector;
 import com.elegro.masterfinan.infraestructura.entity.cruds.*;
 import org.springframework.stereotype.Component;
@@ -49,21 +48,33 @@ public class Models extends ManagerRepository {
 
     @Override
     public AbonoDaoRepository entityAbonos() {
-        return null;
+        if(abonos == null){
+            abonos = new AbonoRepository(conn);
+        }
+        return abonos;
     }
 
     @Override
     public PagoDaoRepository entityPagos() {
-        return null;
+        if(pagos == null){
+            pagos = new PagoRepository(conn);
+        }
+        return pagos;
     }
 
     @Override
     public GastoCategoriaDaoRepository entityGastoCategorias() {
-        return null;
+        if(gastoCategorias == null){
+            gastoCategorias = new GastoCategoriaRepository(conn);
+        }
+        return gastoCategorias;
     }
 
     @Override
     public IngresoCategoriaDaoRepository entityIngresoCategorias() {
-        return null;
+        if(ingresoCategorias == null){
+            ingresoCategorias = new IngresoCategoriaRepository(conn);
+        }
+        return ingresoCategorias;
     }
 }

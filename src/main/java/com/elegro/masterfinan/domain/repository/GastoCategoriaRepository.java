@@ -4,9 +4,14 @@ import com.elegro.masterfinan.infraestructura.entity.cruds.GastoCategoriaDaoRepo
 import com.elegro.masterfinan.infraestructura.entity.Gasto;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class GastoCategoriaRepository implements GastoCategoriaDaoRepository {
+    public GastoCategoriaRepository(Connection conn) {
+
+    }
+
     @Override
     public List<Gasto> findAll() throws DaoException {
         return null;
