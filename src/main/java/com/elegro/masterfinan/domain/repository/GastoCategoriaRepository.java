@@ -1,6 +1,6 @@
 package com.elegro.masterfinan.domain.repository;
 
-import com.elegro.masterfinan.infraestructura.entity.cruds.GastoCategoriaDaoRepository;
+import com.elegro.masterfinan.infraestructura.cruds.GastoCategoriaDaoRepository;
 import com.elegro.masterfinan.infraestructura.entity.Gasto;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 

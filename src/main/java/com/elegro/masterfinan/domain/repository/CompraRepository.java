@@ -1,6 +1,6 @@
 package com.elegro.masterfinan.domain.repository;
 
-import com.elegro.masterfinan.infraestructura.entity.cruds.CompraDaoRepository;
+import com.elegro.masterfinan.infraestructura.cruds.CompraDaoRepository;
 import com.elegro.masterfinan.infraestructura.entity.Compra;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 
