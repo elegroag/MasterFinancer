@@ -1,0 +1,35 @@
+package com.elegro.masterfinan.domain.repository;
+
+import com.elegro.masterfinan.infraestructura.entity.cruds.IngresoCategoriaDaoRepository;
+import com.elegro.masterfinan.infraestructura.entity.IngresoCategoria;
+import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
+
+import java.util.List;
+
+public class IngresoCategoriaRepository implements IngresoCategoriaDaoRepository {
+    @Override
+    public List<IngresoCategoria> findAll() throws DaoException {
+        return null;
+    }
+
+    @Override
+    public IngresoCategoria findById(Long id) throws DaoException {
+        return null;
+    }
+
+    @Override
+    public IngresoCategoria findOne(Long id) throws DaoException {
+        return null;
+    }
+
+    @Override
+    public IngresoCategoria findFirst() throws DaoException {
+        return null;
+    }
+
+    @Override
+    public IngresoCategoria findLast() throws DaoException {
+        return null;
+    }
+
+}

@@ -1,13 +1,12 @@
 package com.elegro.masterfinan.domain.repository;
 
-import com.elegro.masterfinan.infraestructura.cruds.CompraDaoRepository;
-import com.elegro.masterfinan.infraestructura.cruds.PersonaDaoRepository;
-import com.elegro.masterfinan.infraestructura.cruds.TransaccionDaoRepository;
-import com.elegro.masterfinan.infraestructura.cruds.UsuarioDaoRepository;
+import com.elegro.masterfinan.infraestructura.cruds.*;
 import com.elegro.masterfinan.infraestructura.dao.MysqlConnector;
+import com.elegro.masterfinan.infraestructura.entity.cruds.*;
+import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
-
+@Component
 public class Models extends ManagerRepository {
 
     public Models() throws SQLException {
@@ -46,5 +45,25 @@ public class Models extends ManagerRepository {
            transacciones = new TransaccionRepository(conn);
        }
        return transacciones;
+    }
+
+    @Override
+    public AbonoDaoRepository entityAbonos() {
+        return null;
+    }
+
+    @Override
+    public PagoDaoRepository entityPagos() {
+        return null;
+    }
+
+    @Override
+    public GastoCategoriaDaoRepository entityGastoCategorias() {
+        return null;
+    }
+
+    @Override
+    public IngresoCategoriaDaoRepository entityIngresoCategorias() {
+        return null;
     }
 }

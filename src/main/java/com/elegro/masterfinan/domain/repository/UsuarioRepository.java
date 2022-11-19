@@ -1,6 +1,6 @@
 package com.elegro.masterfinan.domain.repository;
 
-import com.elegro.masterfinan.infraestructura.cruds.UsuarioDaoRepository;
+import com.elegro.masterfinan.infraestructura.entity.cruds.UsuarioDaoRepository;
 import com.elegro.masterfinan.infraestructura.dao.MysqlConnector;
 import com.elegro.masterfinan.infraestructura.entity.Usuario;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
@@ -142,6 +142,10 @@ public class UsuarioRepository implements UsuarioDaoRepository {
         } catch (SQLException ex) {
             MysqlConnector.exep(ex);
         }
+    }
+
+    @Override
+    public void search(Usuario use) throws DaoException {
     }
 
     @Override

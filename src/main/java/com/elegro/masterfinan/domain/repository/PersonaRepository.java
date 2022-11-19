@@ -1,6 +1,6 @@
 package com.elegro.masterfinan.domain.repository;
 
-import com.elegro.masterfinan.infraestructura.cruds.PersonaDaoRepository;
+import com.elegro.masterfinan.infraestructura.entity.cruds.PersonaDaoRepository;
 import com.elegro.masterfinan.infraestructura.entity.Persona;
 
 import java.sql.Connection;
@@ -38,19 +38,4 @@ public class PersonaRepository implements PersonaDaoRepository {
         return null;
     }
 
-    @Override
-    public void insert(Persona use) {
-
-    }
-
-    @Override
-    public void update(Persona use) {
-
-    }
-
-    @Override
-    public void delete(Persona use) {
-
-    }
-    
 }
