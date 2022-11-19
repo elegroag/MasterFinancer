@@ -1,10 +1,12 @@
 package com.elegro.masterfinan.domain.repository;
 
 import com.elegro.masterfinan.infraestructura.cruds.TransaccionDaoRepository;
+import com.elegro.masterfinan.infraestructura.dao.MysqlConnector;
 import com.elegro.masterfinan.infraestructura.entity.Transaccion;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -34,17 +36,76 @@ public class TransaccionRepository extends AbsRecordInteger<Transaccion> impleme
 
     @Override
     public Transaccion insert(Transaccion use) throws DaoException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
+            stmt = conn.prepareStatement(SQl_INSERT);
+            try {
+                stmt.setLong(1, use.getId());
+                stmt.executeUpdate();
+            } catch (SQLException ex) {
+                throw new DaoException("Error de sql", ex);
+            } finally {
+                if (this.connectionTransactional == null) {
+                    MysqlConnector.close(stmt);
+                    MysqlConnector.close(conn);
+                }
+            }
+        } catch (SQLException er) {
+            MysqlConnector.exep(er);
+        }
         return use;
     }
 
     @Override
     public boolean update(Transaccion use) throws DaoException {
-        return false;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        boolean estado = false;
+        try {
+            conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
+            stmt = conn.prepareStatement(SQl_UPDATE);
+            try {
+                stmt.setLong(7, use.getId());
+                stmt.executeUpdate();
+            } catch (SQLException er) {
+                throw new DaoException("Error sql", er);
+            } finally {
+                if (this.connectionTransactional == null) {
+                    MysqlConnector.close(stmt);
+                    MysqlConnector.close(conn);
+                }
+            }
+        } catch (SQLException ex) {
+            MysqlConnector.exep(ex);
+        }
+        return estado;
     }
 
     @Override
     public boolean delete(Transaccion use) throws DaoException {
-        return false;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        boolean estado = false;
+        try {
+            conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
+            stmt = conn.prepareStatement(SQl_DELETE);
+            try {
+                stmt.setFloat(1, use.getId());
+                stmt.executeUpdate();
+            } catch (SQLException er) {
+                throw new DaoException("Error SQl", er);
+            } finally {
+                if (this.connectionTransactional == null) {
+                    MysqlConnector.close(stmt);
+                    MysqlConnector.close(conn);
+                }
+            }
+        } catch (SQLException ex) {
+            MysqlConnector.exep(ex);
+        }
+        return estado;
     }
 
     @Override
