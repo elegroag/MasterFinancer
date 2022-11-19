@@ -1,18 +1,17 @@
 package com.elegro.masterfinan.domain.repository;
 
 import com.elegro.masterfinan.infraestructura.cruds.TransaccionDaoRepository;
-import com.elegro.masterfinan.infraestructura.dao.MysqlConnector;
 import com.elegro.masterfinan.infraestructura.entity.Transaccion;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
-public class TransaccionRepository implements TransaccionDaoRepository {
+public class TransaccionRepository extends AbsRecordInteger<Transaccion> implements TransaccionDaoRepository {
 
     private static final String SQl_SELECT = "SELECT id, fecha, valor, estado, tipo_transaccion, fecha, hora, usuario  FROM transacciones WHERE 1;";
 
@@ -21,104 +20,66 @@ public class TransaccionRepository implements TransaccionDaoRepository {
     private static final String SQl_UPDATE = "UPDATE transacciones SET fecha=?, valor=?, estado=?, tipo_transaccion=?, fecha=?, hora=?, usuario=?  WHERE id=?";
 
     private static final String SQl_DELETE = "DELETE FROM transacciones WHERE id=?";
-    protected Connection connectionTransactional;
-
-    public TransaccionRepository(){
-    }
 
     public TransaccionRepository(Connection conn){
         this.connectionTransactional = conn;
+        this.table = "transacciones";
+        this.primaryKey = "id";
+        this.fillable = new String[] { "id", "fecha", "valor", "estado", "tipo_transaccion", "fecha", "hora", "usuario"};
+        this.query.put("SQl_SELECT", SQl_SELECT);
+        this.query.put("SQl_INSERT", SQl_INSERT);
+        this.query.put("SQl_UPDATE", SQl_UPDATE);
+        this.query.put("SQl_DELETE", SQl_DELETE);
     }
 
     @Override
-    public List<Transaccion> findAll() throws DaoException {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        List<Transaccion> lista = new ArrayList<>();
-
-        try {
-            conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
-            stmt = conn.prepareStatement(SQl_SELECT);
-            rs = stmt.executeQuery();
-            try {
-                while (rs.next()) {
-                    lista.add(recordModel(rs));
-                }
-            } catch (SQLException ex) {
-                throw new DaoException("Error de sql", ex);
-            } finally {
-                if (this.connectionTransactional == null) {
-                    MysqlConnector.close(stmt);
-                    MysqlConnector.close(conn);
-                    MysqlConnector.close(rs);
-                }
-            }
-        } catch (SQLException er) {
-            MysqlConnector.exep(er);
-        }
-        return lista;
+    public Transaccion insert(Transaccion use) throws DaoException {
+        return use;
     }
 
     @Override
-    public Transaccion findById(Long id) throws DaoException {
-        return null;
+    public boolean update(Transaccion use) throws DaoException {
+        return false;
     }
 
     @Override
-    public Transaccion findOne(Long id) throws DaoException {
-        return null;
-    }
-
-
-    @Override
-    public Transaccion findFirst() throws DaoException {
-        return null;
+    public boolean delete(Transaccion use) throws DaoException {
+        return false;
     }
 
     @Override
-    public Transaccion findLast() throws DaoException {
-        return null;
+    public Transaccion search(Transaccion use) throws DaoException {
+        return use;
     }
 
-    @Override
-    public void insert(Transaccion use) throws DaoException {
-
-    }
-
-    @Override
-    public void update(Transaccion use) throws DaoException {
-
-    }
-
-    @Override
-    public void delete(Transaccion use) throws DaoException {
-    }
-
-    @Override
-    public void search(Transaccion use) throws DaoException {
-
-    }
-
-    private Transaccion recordModel(ResultSet rs) throws SQLException {
+    public Transaccion recordModel(ResultSet rs) throws SQLException {
         Integer id = rs.getInt("id");
-        //LocalDate fecha =  rs.getDate("fecha");
+        LocalDate fecha = LocalDate.parse(rs.getString("fecha"));
         Long usuario = rs.getLong("usuario");
-        double valor = rs.getDouble("valor");
+        Double valor = rs.getDouble("valor");
         String estado = rs.getString("estado");
-        //LocalTime hora = rs.getString("hora");
+        LocalTime hora = LocalTime.parse(rs.getString("hora"));
         String tipoTransaccion = rs.getString("tipo_transaccion");
 
         Transaccion tra = new Transaccion();
         tra.setId(id);
-        //tra.setFecha(fecha);
+        tra.setFecha(fecha);
         tra.setUsuario(usuario);
         tra.setValor(valor);
         tra.setEstado(estado);
-        //tra.setHora();
+        tra.setHora(hora);
         tra.setTipoTransaccion(tipoTransaccion);
         tra.setEntityUsuario(null);
         tra.setEntityUsuario(null);
         return tra;
+    }
+
+    @Override
+    public List<Transaccion> findByIngresoCategoria(Long idCategoria) throws DaoException {
+        String sql = "SELECT tr.id, tr.fecha, tr.valor, tr.estado, tr.tipo_transaccion, tr.fecha, tr.hora, tr.usuario " +
+        " FROM transacciones as tr " +
+        " INNER JOIN abonos ON abonos.transaccion=tr.id " +
+        " WHERE abonos.ingreso=?";
+        return this.findSql(sql);
     }
 }

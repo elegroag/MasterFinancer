@@ -20,31 +20,31 @@ public class TransaccionesController {
     TransaccionService transaccionService;
 
     @GetMapping("/todo")
-    public List<Transaccion> listarTransacciones() throws SQLException, DaoException {
+    public List<Transaccion> listarTransacciones() throws DaoException {
         return transaccionService.renderLista();
     }
 
     @GetMapping("/crear")
     public String crear(){
-        transaccionService.crea();
+        //transaccionService.crea();
         return "";
     }
 
     @GetMapping("/borrar")
     public String borrar(){
-        transaccionService.borra();
+        //transaccionService.borra();
         return "";
     }
 
     @GetMapping("/actualizar")
     public String actualiza(){
-        transaccionService.actualiza();
+        //transaccionService.actualiza();
         return "";
     }
 
     @GetMapping("/buscar")
     public String buscar(){
-        transaccionService.busca();
+        //transaccionService.busca();
         return "";
     }
 

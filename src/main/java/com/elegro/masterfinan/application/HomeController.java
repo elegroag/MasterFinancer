@@ -19,7 +19,7 @@ public class HomeController {
     UsuarioService usuarioService;
 
     @GetMapping("/index")
-    public Optional<List<Usuario>> saludar() throws DaoException {
+    public Optional<List<Usuario>> listaUsuarios() throws DaoException {
         return usuarioService.getUsuarios();
     }
 }
