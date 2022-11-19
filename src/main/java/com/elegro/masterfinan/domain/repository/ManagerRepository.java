@@ -1,6 +1,6 @@
 package com.elegro.masterfinan.domain.repository;
 
-import com.elegro.masterfinan.infraestructura.entity.cruds.*;
+import com.elegro.masterfinan.infraestructura.cruds.*;
 
 import java.sql.Connection;
 

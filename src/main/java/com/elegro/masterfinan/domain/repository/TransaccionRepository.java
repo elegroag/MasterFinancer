@@ -1,6 +1,6 @@
 package com.elegro.masterfinan.domain.repository;
 
-import com.elegro.masterfinan.infraestructura.entity.cruds.TransaccionDaoRepository;
+import com.elegro.masterfinan.infraestructura.cruds.TransaccionDaoRepository;
 import com.elegro.masterfinan.infraestructura.dao.MysqlConnector;
 import com.elegro.masterfinan.infraestructura.entity.Transaccion;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;

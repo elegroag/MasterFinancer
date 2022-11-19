@@ -1,6 +1,6 @@
 package com.elegro.masterfinan.domain.repository;
 
-import com.elegro.masterfinan.infraestructura.entity.cruds.PersonaDaoRepository;
+import com.elegro.masterfinan.infraestructura.cruds.PersonaDaoRepository;
 import com.elegro.masterfinan.infraestructura.entity.Persona;
 
 import java.sql.Connection;
