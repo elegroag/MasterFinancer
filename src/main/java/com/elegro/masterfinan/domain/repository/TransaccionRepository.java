@@ -1,22 +1,18 @@
 package com.elegro.masterfinan.domain.repository;
 
-import com.elegro.masterfinan.infraestructura.cruds.TransaccionDaoRepository;
+import com.elegro.masterfinan.infraestructura.entity.cruds.TransaccionDaoRepository;
 import com.elegro.masterfinan.infraestructura.dao.MysqlConnector;
 import com.elegro.masterfinan.infraestructura.entity.Transaccion;
-import com.elegro.masterfinan.infraestructura.entity.Usuario;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TransaccionRepository implements TransaccionDaoRepository {
-
 
     private static final String SQl_SELECT = "SELECT id, fecha, valor, estado, tipo_transaccion, fecha, hora, usuario  FROM transacciones WHERE 1;";
 
@@ -65,14 +61,15 @@ public class TransaccionRepository implements TransaccionDaoRepository {
     }
 
     @Override
-    public Transaccion findById(Integer id) throws DaoException {
+    public Transaccion findById(Long id) throws DaoException {
         return null;
     }
 
     @Override
-    public Transaccion findOne(Integer id) throws DaoException {
+    public Transaccion findOne(Long id) throws DaoException {
         return null;
     }
+
 
     @Override
     public Transaccion findFirst() throws DaoException {
@@ -96,6 +93,11 @@ public class TransaccionRepository implements TransaccionDaoRepository {
 
     @Override
     public void delete(Transaccion use) throws DaoException {
+    }
+
+    @Override
+    public void search(Transaccion use) throws DaoException {
+
     }
 
     private Transaccion recordModel(ResultSet rs) throws SQLException {

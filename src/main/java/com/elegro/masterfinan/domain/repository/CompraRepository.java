@@ -1,6 +1,6 @@
 package com.elegro.masterfinan.domain.repository;
 
-import com.elegro.masterfinan.infraestructura.cruds.CompraDaoRepository;
+import com.elegro.masterfinan.infraestructura.entity.cruds.CompraDaoRepository;
 import com.elegro.masterfinan.infraestructura.entity.Compra;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 
@@ -21,12 +21,12 @@ public class CompraRepository implements CompraDaoRepository {
     }
 
     @Override
-    public Compra findById(Integer id) throws DaoException {
+    public Compra findById(Long id) throws DaoException {
         return null;
     }
 
     @Override
-    public Compra findOne(Integer id) throws DaoException {
+    public Compra findOne(Long id) throws DaoException {
         return null;
     }
 
@@ -40,18 +40,4 @@ public class CompraRepository implements CompraDaoRepository {
         return null;
     }
 
-    @Override
-    public void insert(Compra use) throws DaoException {
-
-    }
-
-    @Override
-    public void update(Compra use) throws DaoException {
-
-    }
-
-    @Override
-    public void delete(Compra use) throws DaoException {
-
-    }
 }

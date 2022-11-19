@@ -5,14 +5,14 @@ import java.time.LocalTime;
 
 public class Transaccion {
 
-    private Integer id;
-    private LocalDate fecha;
-    private LocalTime hora;
-    private Long usuario;
-    private Double valor;
-    private String estado;
-    private String tipoTransaccion;
-    private Usuario entityUsuario;
+    protected Integer id;
+    protected LocalDate fecha;
+    protected LocalTime hora;
+    protected Long usuario;
+    protected Double valor;
+    protected String estado;
+    protected String tipoTransaccion;
+    protected Usuario entityUsuario;
 
     public Integer getId() {
         return id;
