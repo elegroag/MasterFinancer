@@ -13,13 +13,13 @@ import java.sql.SQLException;
 public class UsuarioRepository extends AbsRecordLong<Usuario> implements UsuarioDaoRepository {
 
 
-    private static final String SQl_SELECT = "SELECT id, nombres, apellidos, username, password, saldo, tipo_identificacion FROM usuarios WHERE 1;";
+    private static final String SQL_SELECT = "SELECT id, nombres, apellidos, username, password, saldo, tipo_identificacion FROM usuarios WHERE 1;";
 
-    private static final String SQl_INSERT = "INSERT INTO usuarios (id, nombres, apellidos, username, password, saldo, tipo_identificacion)VALUES (?, ?, ?, ?, ?, ?, ?);";
+    private static final String SQL_INSERT = "INSERT INTO usuarios (id, nombres, apellidos, username, password, saldo, tipo_identificacion)VALUES (?, ?, ?, ?, ?, ?, ?);";
 
-    private static final String SQl_UPDATE = "UPDATE usuarios SET nombres=? , apellidos=?, username=?, password=?, saldo=?, tipo_identificacion=? WHERE id=?;";
+    private static final String SQL_UPDATE = "UPDATE usuarios SET nombres=? , apellidos=?, username=?, password=?, saldo=?, tipo_identificacion=? WHERE id=?;";
 
-    private static final String SQl_DELETE = "DELETE FROM usuarios WHERE id=?;";
+    private static final String SQL_DELETE = "DELETE FROM usuarios WHERE id=?;";
 
     public UsuarioRepository(Connection conn)
     {
@@ -27,10 +27,10 @@ public class UsuarioRepository extends AbsRecordLong<Usuario> implements Usuario
         this.table = "usuarios";
         this.primaryKey = "id";
         this.fillable = new String[] { "id", "nombres", "apellidos", "username", "password", "saldo", "tipo_identificacion"};
-        this.query.put("SQl_SELECT", SQl_SELECT);
-        this.query.put("SQl_INSERT", SQl_INSERT);
-        this.query.put("SQl_UPDATE", SQl_UPDATE);
-        this.query.put("SQl_DELETE", SQl_DELETE);
+        this.query.put("SQL_SELECT", SQL_SELECT);
+        this.query.put("SQL_INSERT", SQL_INSERT);
+        this.query.put("SQL_UPDATE", SQL_UPDATE);
+        this.query.put("SQL_DELETE", SQL_DELETE);
     }
     @Override
     public Usuario insert(Usuario user) throws DaoException {
@@ -38,7 +38,7 @@ public class UsuarioRepository extends AbsRecordLong<Usuario> implements Usuario
         PreparedStatement stmt = null;
         try {
             conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
-            stmt = conn.prepareStatement(SQl_INSERT);
+            stmt = conn.prepareStatement(SQL_INSERT);
             try {
                 stmt.setLong(1, user.getId());
                 stmt.setString(2, user.getNombres());
@@ -69,7 +69,7 @@ public class UsuarioRepository extends AbsRecordLong<Usuario> implements Usuario
         boolean estado = false;
         try {
             conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
-            stmt = conn.prepareStatement(SQl_UPDATE);
+            stmt = conn.prepareStatement(SQL_UPDATE);
             try {
                 stmt.setString(1, user.getNombres());
                 stmt.setString(2, user.getApellidos());
@@ -100,7 +100,7 @@ public class UsuarioRepository extends AbsRecordLong<Usuario> implements Usuario
         boolean estado = false;
         try {
             conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
-            stmt = conn.prepareStatement(SQl_DELETE);
+            stmt = conn.prepareStatement(SQL_DELETE);
             try {
                 stmt.setFloat(1, use.getId());
                 stmt.executeUpdate();

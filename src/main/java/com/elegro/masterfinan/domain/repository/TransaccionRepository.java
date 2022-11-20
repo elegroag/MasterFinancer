@@ -15,23 +15,23 @@ import java.util.List;
 
 public class TransaccionRepository extends AbsRecordInteger<Transaccion> implements TransaccionDaoRepository {
 
-    private static final String SQl_SELECT = "SELECT id, fecha, valor, estado, tipo_transaccion, fecha, hora, usuario  FROM transacciones WHERE 1;";
+    private static final String SQL_SELECT = "SELECT id, fecha, valor, estado, tipo_transaccion, fecha, hora, usuario  FROM transacciones WHERE 1;";
 
-    private static final String SQl_INSERT = "INSERT INTO transacciones (id, fecha, valor, estado, tipo_transaccion, fecha, hora, usuario)VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT = "INSERT INTO transacciones (id, fecha, valor, estado, tipo_transaccion, fecha, hora, usuario)VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private static final String SQl_UPDATE = "UPDATE transacciones SET fecha=?, valor=?, estado=?, tipo_transaccion=?, fecha=?, hora=?, usuario=?  WHERE id=?";
+    private static final String SQL_UPDATE = "UPDATE transacciones SET fecha=?, valor=?, estado=?, tipo_transaccion=?, fecha=?, hora=?, usuario=?  WHERE id=?";
 
-    private static final String SQl_DELETE = "DELETE FROM transacciones WHERE id=?";
+    private static final String SQL_DELETE = "DELETE FROM transacciones WHERE id=?";
 
     public TransaccionRepository(Connection conn){
         this.connectionTransactional = conn;
         this.table = "transacciones";
         this.primaryKey = "id";
         this.fillable = new String[] { "id", "fecha", "valor", "estado", "tipo_transaccion", "fecha", "hora", "usuario"};
-        this.query.put("SQl_SELECT", SQl_SELECT);
-        this.query.put("SQl_INSERT", SQl_INSERT);
-        this.query.put("SQl_UPDATE", SQl_UPDATE);
-        this.query.put("SQl_DELETE", SQl_DELETE);
+        this.query.put("SQL_SELECT", SQL_SELECT);
+        this.query.put("SQL_INSERT", SQL_INSERT);
+        this.query.put("SQL_UPDATE", SQL_UPDATE);
+        this.query.put("SQL_DELETE", SQL_DELETE);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class TransaccionRepository extends AbsRecordInteger<Transaccion> impleme
         PreparedStatement stmt = null;
         try {
             conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
-            stmt = conn.prepareStatement(SQl_INSERT);
+            stmt = conn.prepareStatement(SQL_INSERT);
             try {
                 stmt.setLong(1, use.getId());
                 stmt.executeUpdate();
@@ -65,7 +65,7 @@ public class TransaccionRepository extends AbsRecordInteger<Transaccion> impleme
         boolean estado = false;
         try {
             conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
-            stmt = conn.prepareStatement(SQl_UPDATE);
+            stmt = conn.prepareStatement(SQL_UPDATE);
             try {
                 stmt.setLong(7, use.getId());
                 stmt.executeUpdate();
@@ -90,7 +90,7 @@ public class TransaccionRepository extends AbsRecordInteger<Transaccion> impleme
         boolean estado = false;
         try {
             conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
-            stmt = conn.prepareStatement(SQl_DELETE);
+            stmt = conn.prepareStatement(SQL_DELETE);
             try {
                 stmt.setFloat(1, use.getId());
                 stmt.executeUpdate();

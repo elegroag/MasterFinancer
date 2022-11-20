@@ -9,23 +9,23 @@ import java.sql.SQLException;
 
 public class GastoRepository  extends AbsRecordLong<Gasto> implements GastoDaoRepository {
 
-    private static final String SQl_SELECT = "SELECT id, tipo_persona, identificacion, nombres, FROM gastos WHERE 1;";
+    private static final String SQL_SELECT = "SELECT id, tipo_persona, identificacion, nombres, FROM gastos WHERE 1;";
 
-    private static final String SQl_INSERT = "INSERT INTO gastos (tipo_persona, identificacion, nombres, )VALUES (?, ?, ?, ?, )";
+    private static final String SQL_INSERT = "INSERT INTO gastos (tipo_persona, identificacion, nombres, )VALUES (?, ?, ?, ?, )";
 
-    private static final String SQl_UPDATE = "UPDATE gastos SET tipo_persona=?, identificacion=?, ciudad=?, tipo_identificacion=?  WHERE id=?";
+    private static final String SQL_UPDATE = "UPDATE gastos SET tipo_persona=?, identificacion=?, ciudad=?, tipo_identificacion=?  WHERE id=?";
 
-    private static final String SQl_DELETE = "DELETE FROM gastos WHERE id=?";
+    private static final String SQL_DELETE = "DELETE FROM gastos WHERE id=?";
 
     public GastoRepository(Connection conn) {
         this.connectionTransactional = conn;
         this.table = "gastos";
         this.primaryKey = "id";
         this.fillable = new String[] { "id", "nombres", "apellidos", "username", "password", "saldo", "tipo_identificacion"};
-        this.query.put("SQl_SELECT", SQl_SELECT);
-        this.query.put("SQl_INSERT", SQl_INSERT);
-        this.query.put("SQl_UPDATE", SQl_UPDATE);
-        this.query.put("SQl_DELETE", SQl_DELETE);
+        this.query.put("SQL_SELECT", SQL_SELECT);
+        this.query.put("SQL_INSERT", SQL_INSERT);
+        this.query.put("SQL_UPDATE", SQL_UPDATE);
+        this.query.put("SQL_DELETE", SQL_DELETE);
     }
 
     @Override
