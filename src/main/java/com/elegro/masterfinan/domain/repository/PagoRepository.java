@@ -1,9 +1,12 @@
 package com.elegro.masterfinan.domain.repository;
 
 import com.elegro.masterfinan.infraestructura.cruds.PagoDaoRepository;
+import com.elegro.masterfinan.infraestructura.dao.MysqlConnector;
 import com.elegro.masterfinan.infraestructura.entity.Pago;
+import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -33,4 +36,82 @@ public class PagoRepository extends AbsRecordLong<Pago> implements PagoDaoReposi
         return null;
     }
 
+    @Override
+    public Pago insert(Pago use) throws DaoException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
+            stmt = conn.prepareStatement(SQL_INSERT);
+            try {
+                stmt.setLong(1, use.getId());
+                stmt.executeUpdate();
+            } catch (SQLException ex) {
+                throw new DaoException("Error de sql", ex);
+            } finally {
+                if (this.connectionTransactional == null) {
+                    MysqlConnector.close(stmt);
+                    MysqlConnector.close(conn);
+                }
+            }
+        } catch (SQLException er) {
+            MysqlConnector.exep(er);
+        }
+        return use;
+    }
+
+    @Override
+    public boolean update(Pago use) throws DaoException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        boolean estado = false;
+        try {
+            conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
+            stmt = conn.prepareStatement(SQL_UPDATE);
+            try {
+                stmt.setLong(7, use.getId());
+                stmt.executeUpdate();
+            } catch (SQLException er) {
+                throw new DaoException("Error sql", er);
+            } finally {
+                if (this.connectionTransactional == null) {
+                    MysqlConnector.close(stmt);
+                    MysqlConnector.close(conn);
+                }
+            }
+        } catch (SQLException ex) {
+            MysqlConnector.exep(ex);
+        }
+        return estado;
+    }
+
+    @Override
+    public boolean delete(Pago use) throws DaoException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        boolean estado = false;
+        try {
+            conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
+            stmt = conn.prepareStatement(SQL_DELETE);
+            try {
+                stmt.setFloat(1, use.getId());
+                stmt.executeUpdate();
+            } catch (SQLException er) {
+                throw new DaoException("Error SQl", er);
+            } finally {
+                if (this.connectionTransactional == null) {
+                    MysqlConnector.close(stmt);
+                    MysqlConnector.close(conn);
+                }
+            }
+        } catch (SQLException ex) {
+            MysqlConnector.exep(ex);
+        }
+        return estado;
+    }
+
+    @Override
+    public Pago search(Pago use) throws DaoException {
+        return null;
+    }
 }

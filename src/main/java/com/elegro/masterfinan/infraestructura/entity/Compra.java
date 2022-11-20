@@ -10,13 +10,33 @@ public class Compra {
     private LocalDate fechaFinal;
     private String estadoCredito;
     private String tipoPago;
-    private Integer persona;
+    private Long persona;
     private Double saldoPendiente;
-    private Integer valorCompra;
+    private Double valorCompra;
     private Long usuario;
     private Usuario entityUsuario;
     private Persona entityPersona;
     private List<CompraDetalle> detalles;
+
+    private List<Transaccion> transacciones;
+
+    private List<Pago> pagos;
+
+    public List<Pago> getPagos() {
+        return pagos;
+    }
+
+    public void setPagos(List<Pago> pagos) {
+        this.pagos = pagos;
+    }
+
+    public List<Transaccion> getTransacciones() {
+        return transacciones;
+    }
+
+    public void setTransacciones(List<Transaccion> transacciones) {
+        this.transacciones = transacciones;
+    }
 
     public Integer getId() {
         return id;
@@ -58,11 +78,11 @@ public class Compra {
         this.tipoPago = tipoPago;
     }
 
-    public Integer getPersona() {
+    public Long getPersona() {
         return persona;
     }
 
-    public void setPersona(Integer persona) {
+    public void setPersona(Long persona) {
         this.persona = persona;
     }
 
@@ -74,11 +94,11 @@ public class Compra {
         this.saldoPendiente = saldoPendiente;
     }
 
-    public Integer getValorCompra() {
+    public Double getValorCompra() {
         return valorCompra;
     }
 
-    public void setValorCompra(Integer valorCompra) {
+    public void setValorCompra(Double valorCompra) {
         this.valorCompra = valorCompra;
     }
 
