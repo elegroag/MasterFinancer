@@ -4,6 +4,7 @@ import com.elegro.masterfinan.infraestructura.cruds.IngresoCategoriaDaoRepositor
 import com.elegro.masterfinan.infraestructura.entity.IngresoCategoria;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -30,6 +31,21 @@ public class IngresoCategoriaRepository extends AbsRecordLong<IngresoCategoria> 
 
     @Override
     public IngresoCategoria recordModel(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareModel(PreparedStatement stmt, IngresoCategoria use) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareUpdate(PreparedStatement stmt, IngresoCategoria use) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareDelete(PreparedStatement stmt, IngresoCategoria use) throws SQLException {
         return null;
     }
 }

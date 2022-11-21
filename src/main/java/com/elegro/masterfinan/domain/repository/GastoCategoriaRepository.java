@@ -4,6 +4,7 @@ import com.elegro.masterfinan.infraestructura.cruds.GastoCategoriaDaoRepository;
 import com.elegro.masterfinan.infraestructura.entity.GastoCategoria;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -29,6 +30,21 @@ public class GastoCategoriaRepository extends AbsRecordLong<GastoCategoria> impl
 
     @Override
     public GastoCategoria recordModel(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareModel(PreparedStatement stmt, GastoCategoria use) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareUpdate(PreparedStatement stmt, GastoCategoria use) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareDelete(PreparedStatement stmt, GastoCategoria use) throws SQLException {
         return null;
     }
 }

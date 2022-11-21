@@ -4,6 +4,7 @@ import com.elegro.masterfinan.infraestructura.cruds.AbonoDaoRepository;
 import com.elegro.masterfinan.infraestructura.entity.Abono;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -29,6 +30,21 @@ public class AbonoRepository extends AbsRecordLong<Abono> implements AbonoDaoRep
 
     @Override
     public Abono recordModel(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareModel(PreparedStatement stmt, Abono use) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareUpdate(PreparedStatement stmt, Abono use) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareDelete(PreparedStatement stmt, Abono use) throws SQLException {
         return null;
     }
 }

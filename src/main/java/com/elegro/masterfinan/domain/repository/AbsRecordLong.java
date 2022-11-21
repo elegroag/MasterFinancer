@@ -3,10 +3,7 @@ package com.elegro.masterfinan.domain.repository;
 import com.elegro.masterfinan.infraestructura.dao.MysqlConnector;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +14,18 @@ public abstract class AbsRecordLong<T> {
     protected Connection connectionTransactional;
     protected String table;
     protected String primaryKey;
+    protected Long insertId;
     protected String fields;
     protected String[] fillable;
     protected Map<String, String> query = new HashMap<>();
+
+    public abstract T recordModel(ResultSet rs) throws SQLException;
+
+    public abstract Integer prepareModel(PreparedStatement stmt, T use) throws SQLException ;
+
+    public abstract Integer prepareUpdate(PreparedStatement stmt, T use) throws SQLException;
+
+    public abstract Integer prepareDelete(PreparedStatement stmt, T use) throws  SQLException;
 
     public T findById(Long id) throws DaoException {
         fields = String.join(",", fillable);
@@ -71,34 +77,20 @@ public abstract class AbsRecordLong<T> {
     }
 
     public T find(String sql, Long id) throws DaoException{
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
         T use = null;
         try {
-            conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
-            stmt = conn.prepareStatement(sql);
+            Connection conn = this.connectionTransactional;
+            PreparedStatement stmt = conn.prepareStatement(sql);
             if(id != null){
                 stmt.setLong(1, id);
             }
-            try {
-                rs = stmt.executeQuery();
-                while (rs.next()) {
-                    use = recordModel(rs);
-                }
-            } catch (SQLException ex) {
-                throw new DaoException("Error de sql", ex);
-            } finally {
-                if (this.connectionTransactional == null) {
-                    MysqlConnector.close(stmt);
-                    MysqlConnector.close(conn);
-                    if(rs != null){
-                        MysqlConnector.close(rs);
-                    }
-                }
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                use = recordModel(rs);
             }
         } catch (SQLException er) {
             MysqlConnector.exep(er);
+            throw new DaoException("Error SQl", er);
         }
         return use;
     }
@@ -121,5 +113,48 @@ public abstract class AbsRecordLong<T> {
         return lista;
     }
 
-    public abstract T recordModel(ResultSet rs) throws SQLException;
+    public T insert(T use) throws DaoException {
+        try {
+            Connection conn = this.connectionTransactional;
+            PreparedStatement stmt = conn.prepareStatement(query.get("SQL_INSERT"), Statement.RETURN_GENERATED_KEYS);
+            int affectedRows = prepareModel(stmt, use);
+            if (affectedRows != 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        this.insertId = generatedKeys.getLong(1);
+                    } else {
+                        throw new SQLException("Creating user failed, no ID obtained.");
+                    }
+                }
+            }
+        } catch (SQLException er) {
+            MysqlConnector.exep(er);
+        }
+        return use;
+    }
+
+    public boolean update(T use) throws DaoException {
+        int affectedRows = 0;
+        try {
+            Connection conn = this.connectionTransactional;
+            PreparedStatement stmt = conn.prepareStatement(this.query.get("SQL_UPDATE"));
+            affectedRows = prepareUpdate(stmt, use);
+        } catch (SQLException ex) {
+            MysqlConnector.exep(ex);
+        }
+        return affectedRows > 0;
+    }
+
+    public boolean delete(T use) throws DaoException {
+        int affectedRows = 0;
+        try {
+            Connection conn = this.connectionTransactional;
+            PreparedStatement stmt = conn.prepareStatement(this.query.get("SQL_DELETE"));
+            affectedRows = prepareDelete(stmt, use);
+        } catch (SQLException ex) {
+            MysqlConnector.exep(ex);
+        }
+        return affectedRows > 0;
+    }
+
 }

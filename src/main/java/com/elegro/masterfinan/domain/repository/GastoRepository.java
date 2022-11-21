@@ -4,6 +4,7 @@ import com.elegro.masterfinan.infraestructura.cruds.GastoDaoRepository;
 import com.elegro.masterfinan.infraestructura.entity.Gasto;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -30,6 +31,21 @@ public class GastoRepository  extends AbsRecordLong<Gasto> implements GastoDaoRe
 
     @Override
     public Gasto recordModel(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareModel(PreparedStatement stmt, Gasto use) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareUpdate(PreparedStatement stmt, Gasto use) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareDelete(PreparedStatement stmt, Gasto use) throws SQLException {
         return null;
     }
 }

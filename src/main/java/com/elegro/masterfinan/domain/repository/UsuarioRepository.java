@@ -1,7 +1,6 @@
 package com.elegro.masterfinan.domain.repository;
 
 import com.elegro.masterfinan.infraestructura.cruds.UsuarioDaoRepository;
-import com.elegro.masterfinan.infraestructura.dao.MysqlConnector;
 import com.elegro.masterfinan.infraestructura.entity.Usuario;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 
@@ -32,91 +31,6 @@ public class UsuarioRepository extends AbsRecordLong<Usuario> implements Usuario
         this.query.put("SQL_UPDATE", SQL_UPDATE);
         this.query.put("SQL_DELETE", SQL_DELETE);
     }
-    @Override
-    public Usuario insert(Usuario user) throws DaoException {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        try {
-            conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
-            stmt = conn.prepareStatement(SQL_INSERT);
-            try {
-                stmt.setLong(1, user.getId());
-                stmt.setString(2, user.getNombres());
-                stmt.setString(3, user.getApellidos());
-                stmt.setString(4, user.getUsername());
-                stmt.setString(5, user.getPassword());
-                stmt.setDouble(6, user.getSaldo());
-                stmt.setInt(7, user.getTipoIdentificacion());
-                stmt.executeUpdate();
-            } catch (SQLException ex) {
-                throw new DaoException("Error de sql", ex);
-            } finally {
-                if (this.connectionTransactional == null) {
-                    MysqlConnector.close(stmt);
-                    MysqlConnector.close(conn);
-                }
-            }
-        } catch (SQLException er) {
-            MysqlConnector.exep(er);
-        }
-        return user;
-    }
-
-    @Override
-    public boolean update(Usuario user)throws DaoException {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        boolean estado = false;
-        try {
-            conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
-            stmt = conn.prepareStatement(SQL_UPDATE);
-            try {
-                stmt.setString(1, user.getNombres());
-                stmt.setString(2, user.getApellidos());
-                stmt.setString(3, user.getUsername());
-                stmt.setString(4, user.getPassword());
-                stmt.setDouble(5, user.getSaldo());
-                stmt.setInt(6, user.getTipoIdentificacion());
-                stmt.setLong(7, user.getId());
-                stmt.executeUpdate();
-            } catch (SQLException er) {
-                throw new DaoException("Error sql", er);
-            } finally {
-                if (this.connectionTransactional == null) {
-                    MysqlConnector.close(stmt);
-                    MysqlConnector.close(conn);
-                }
-            }
-        } catch (SQLException ex) {
-            MysqlConnector.exep(ex);
-        }
-        return estado;
-    }
-
-    @Override
-    public boolean delete(Usuario use)throws DaoException {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        boolean estado = false;
-        try {
-            conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
-            stmt = conn.prepareStatement(SQL_DELETE);
-            try {
-                stmt.setFloat(1, use.getId());
-                stmt.executeUpdate();
-            } catch (SQLException er) {
-               throw new DaoException("Error SQl", er);
-            } finally {
-                if (this.connectionTransactional == null) {
-                    MysqlConnector.close(stmt);
-                    MysqlConnector.close(conn);
-                }
-            }
-        } catch (SQLException ex) {
-            MysqlConnector.exep(ex);
-        }
-        return estado;
-    }
 
     @Override
     public Usuario search(Usuario use) throws DaoException {
@@ -141,5 +55,35 @@ public class UsuarioRepository extends AbsRecordLong<Usuario> implements Usuario
         user.setSaldo(saldo);
         user.setTipoIdentificacion(tipo_identificacion);
         return user;
+    }
+
+    @Override
+    public Integer prepareModel(PreparedStatement stmt, Usuario user) throws SQLException {
+        stmt.setLong(1, user.getId());
+        stmt.setString(2, user.getNombres());
+        stmt.setString(3, user.getApellidos());
+        stmt.setString(4, user.getUsername());
+        stmt.setString(5, user.getPassword());
+        stmt.setDouble(6, user.getSaldo());
+        stmt.setInt(7, user.getTipoIdentificacion());
+        return stmt.executeUpdate();
+    }
+
+    @Override
+    public Integer prepareUpdate(PreparedStatement stmt, Usuario user) throws SQLException {
+        stmt.setString(1, user.getNombres());
+        stmt.setString(2, user.getApellidos());
+        stmt.setString(3, user.getUsername());
+        stmt.setString(4, user.getPassword());
+        stmt.setDouble(5, user.getSaldo());
+        stmt.setInt(6, user.getTipoIdentificacion());
+        stmt.setLong(7, user.getId());
+        return stmt.executeUpdate();
+    }
+
+    @Override
+    public Integer prepareDelete(PreparedStatement stmt, Usuario user) throws SQLException {
+        stmt.setLong(1, user.getId());
+        return stmt.executeUpdate();
     }
 }

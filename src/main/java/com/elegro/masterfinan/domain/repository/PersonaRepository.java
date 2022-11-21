@@ -4,6 +4,7 @@ import com.elegro.masterfinan.infraestructura.cruds.PersonaDaoRepository;
 import com.elegro.masterfinan.infraestructura.entity.Persona;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -32,6 +33,21 @@ public class PersonaRepository extends AbsRecordLong<Persona> implements Persona
 
     @Override
     public Persona recordModel(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareModel(PreparedStatement stmt, Persona use) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareUpdate(PreparedStatement stmt, Persona use) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Integer prepareDelete(PreparedStatement stmt, Persona use) throws SQLException {
         return null;
     }
 }
