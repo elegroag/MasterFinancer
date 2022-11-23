@@ -16,4 +16,6 @@ public interface DaoRecordLong<T, Long>{
 
     T findLast()throws DaoException;
     List<T> findSql(String sql) throws DaoException;
+
+    Long getInsertId();
 }

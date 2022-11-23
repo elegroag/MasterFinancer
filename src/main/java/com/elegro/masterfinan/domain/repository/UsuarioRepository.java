@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class UsuarioRepository extends AbsRecordLong<Usuario> implements UsuarioDaoRepository {
 
@@ -33,8 +34,8 @@ public class UsuarioRepository extends AbsRecordLong<Usuario> implements Usuario
     }
 
     @Override
-    public Usuario search(Usuario use) throws DaoException {
-        return  use;
+    public Optional<Usuario> search(Usuario use) throws DaoException {
+        return  null;
     }
 
     public Usuario recordModel(ResultSet rs) throws SQLException {

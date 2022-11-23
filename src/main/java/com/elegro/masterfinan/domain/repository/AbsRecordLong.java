@@ -27,6 +27,9 @@ public abstract class AbsRecordLong<T> {
 
     public abstract Integer prepareDelete(PreparedStatement stmt, T use) throws  SQLException;
 
+    public Long getInsertId() {
+        return insertId;
+    }
     public T findById(Long id) throws DaoException {
         fields = String.join(",", fillable);
         return find("SELECT " + fields + " FROM " + table + " WHERE " + primaryKey + "=?", id);

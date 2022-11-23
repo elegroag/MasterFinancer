@@ -2,20 +2,20 @@ package com.elegro.masterfinan.application;
 
 import com.elegro.masterfinan.domain.service.TransaccionService;
 import com.elegro.masterfinan.infraestructura.entity.Transaccion;
-import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
 @RestController
 @RequestMapping("/transacciones")
 public class TransaccionesController {
+
+    @Autowired
+    ResponseApi response;
 
     @Autowired
     TransaccionService transaccionService;
@@ -25,24 +25,42 @@ public class TransaccionesController {
         return transaccionService.renderLista();
     }
 
-    @GetMapping("/crear")
-    public Optional<Transaccion> crear(Transaccion transaccion){
+    @PostMapping("/crear")
+    public Optional<Transaccion> crear(@RequestBody Transaccion transaccion){
         return transaccionService.crear(transaccion);
     }
 
-    @GetMapping("/borrar")
-    public Boolean borrar(int id){
-        return transaccionService.borrar(id);
+    @DeleteMapping("/borrar")
+    public IResponseApi borrar(@RequestBody Map<String, String> request){
+        Integer _id = Integer.parseInt(request.get("id"));
+        if (transaccionService.borrar(_id)) {
+            response.setMessage("El proceso se completo con éxito");
+            response.setSuccess(true);
+        }else{
+            response.setMessage("Error no se puede borrar, ha generado un error");
+            response.setSuccess(false);
+        }
+        return response;
     }
 
-    @GetMapping("/actualizar")
-    public Boolean actualiza(Transaccion transaccion, Integer id){
-        return transaccionService.actualiza(transaccion, id);
+    @PutMapping("/actualizar")
+    public IResponseApi actualiza(@RequestBody Transaccion transaccion, @RequestParam String id){
+        Integer _id = Integer.parseInt(id);
+        if (transaccionService.actualiza(transaccion, _id))
+        {
+            response.setMessage("El proceso se completo con éxito");
+            response.setSuccess(true);
+        }else{
+            response.setMessage("Error no se pueden actualizar, ha generado un error");
+            response.setSuccess(true);
+        }
+        return response;
     }
 
     @GetMapping("/buscar")
-    public Optional<Transaccion> buscar(int id){
-        return transaccionService.buscar(id);
+    public Optional<Transaccion> buscar(@RequestParam String id){
+        Integer _id = Integer.parseInt(id);
+        return transaccionService.buscar(_id);
     }
 
 }

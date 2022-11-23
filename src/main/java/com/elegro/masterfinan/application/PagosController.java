@@ -1,36 +1,66 @@
 package com.elegro.masterfinan.application;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.elegro.masterfinan.domain.service.PagoService;
+import com.elegro.masterfinan.infraestructura.entity.Pago;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/pagos")
 public class PagosController {
 
-    @GetMapping("/crear")
-    public String crear(){
+    @Autowired
+    ResponseApi response;
 
-        return "";
+    @Autowired
+    PagoService pagoService;
+
+    @GetMapping("/todo")
+    public List<Pago> listarTransacciones(){
+        return pagoService.listaPagos();
     }
 
-    @GetMapping("/borrar")
-    public String borrar(){
-
-        return "";
+    @PostMapping("/crear")
+    public Optional<Pago> crear(@RequestBody Pago pago){
+        return pagoService.crear(pago);
     }
 
-    @GetMapping("/actualizar")
-    public String actualizar(){
+    @DeleteMapping("/borrar")
+    public IResponseApi borrar(@RequestBody Map<String, String> request){
+        Long _id = Long.parseLong(request.get("id"));
+        if (pagoService.borrar(_id)) {
+            response.setMessage("El proceso se completo con éxito");
+            response.setSuccess(true);
+        }else{
+            response.setMessage("Error no se puede borrar, ha generado un error");
+            response.setSuccess(false);
+        }
+        return response;
+    }
 
-        return "";
+    @PutMapping("/actualizar")
+    public IResponseApi actualiza(@RequestBody Pago pago, @RequestParam String id){
+        Long _id = Long.parseLong(id);
+        if (pagoService.actualiza(pago, _id))
+        {
+            response.setMessage("El proceso se completo con éxito");
+            response.setSuccess(true);
+        }else{
+            response.setMessage("Error no se pueden actualizar, ha generado un error");
+            response.setSuccess(true);
+        }
+        return response;
     }
 
     @GetMapping("/buscar")
-    public String buscar(){
-
-        return "";
+    public Optional<Pago> buscar(@RequestParam String id){
+        Long _id = Long.parseLong(id);
+        return pagoService.buscar(_id);
     }
 
 }

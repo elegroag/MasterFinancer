@@ -1,7 +1,6 @@
 package com.elegro.masterfinan.domain.repository;
 
 import com.elegro.masterfinan.infraestructura.cruds.TransaccionDaoRepository;
-import com.elegro.masterfinan.infraestructura.dao.MysqlConnector;
 import com.elegro.masterfinan.infraestructura.entity.Transaccion;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 
@@ -12,6 +11,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 public class TransaccionRepository extends AbsRecordInteger<Transaccion> implements TransaccionDaoRepository {
 
@@ -33,9 +33,10 @@ public class TransaccionRepository extends AbsRecordInteger<Transaccion> impleme
         this.query.put("SQL_UPDATE", SQL_UPDATE);
         this.query.put("SQL_DELETE", SQL_DELETE);
     }
+    
     @Override
-    public Transaccion search(Transaccion use) throws DaoException {
-        return use;
+    public Optional<Transaccion> search(Transaccion use) throws DaoException {
+        return Optional.empty();
     }
 
     public Transaccion recordModel(ResultSet rs) throws SQLException {
@@ -96,4 +97,6 @@ public class TransaccionRepository extends AbsRecordInteger<Transaccion> impleme
         " WHERE abonos.ingreso=?";
         return this.findSql(sql);
     }
+
+    
 }

@@ -42,5 +42,55 @@ Base De Datos MYSQL
 
 Despliegue De Aplicación
 ===
-Endpoint 1: http://localhost:8090/master-financer/api/home/index        
-Endpoint 2: http://localhost:8090/master-financer/api/transacciones/todo      
+
+Collection Endpoint:          
+---
+
+Transacciones:  
+Transacción Buscar Un Recurso Pasando Parametro Id  
+http://localhost:8090/master-financer/api/transacciones/buscar?id=4   
+
+Transacción Listar Todos Los Recursos   
+http://localhost:8090/master-financer/api/transacciones/todo    
+
+Transacción Crear Recurso   
+http://localhost:8090/master-financer/api/transacciones/crear    
+
+Transacción Editar Recurso Pasando Parametro Id       
+http://localhost:8090/master-financer/api/transacciones/actualizar?id=4   
+
+Transacción Borrar Recurso     
+http://localhost:8090/master-financer/api/transacciones/borrar    
+
+Pagos:    
+Pago Crear Recurso     
+http://localhost:8090/master-financer/api/pagos/crear
+
+Pago Borrar Recurso        
+http://localhost:8090/master-financer/api/pagos/borrar   
+
+Pago Editar Recurso Pasando Parametro Id   
+http://localhost:8090/master-financer/api/pago/actualizar?id=1
+
+Pago Listar Todos Los Recursos     
+http://localhost:8090/master-financer/api/pago/todo
+
+Pago Buscar Un Recurso Pasando Parametro Id  
+http://localhost:8090/master-financer/api/pago/buscar?id=4
+
+
+Compras:  
+Compra Crear Recurso     
+http://localhost:8090/master-financer/api/compra/crear
+
+Compra Borrar Recurso        
+http://localhost:8090/master-financer/api/compra/borrar
+
+Compra Editar Recurso Pasando Parametro Id   
+http://localhost:8090/master-financer/api/compra/actualizar?id=1
+
+Compra Listar Todos Los Recursos     
+http://localhost:8090/master-financer/api/compra/todo
+
+Pago Buscar Un Recurso Pasando Parametro Id  
+http://localhost:8090/master-financer/api/pago/buscar?id=4   

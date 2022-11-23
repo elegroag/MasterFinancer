@@ -2,6 +2,8 @@ package com.elegro.masterfinan.infraestructura.dao;
 
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 
+import java.util.Optional;
+
 public interface DaoRecord<T> {
 
     T insert(T use) throws DaoException;
@@ -10,5 +12,5 @@ public interface DaoRecord<T> {
 
     boolean delete(T use) throws DaoException;
 
-    T search(T use) throws DaoException;
+    Optional<T> search(T use) throws DaoException;
 }

@@ -77,4 +77,17 @@ public class Transaccion {
     public void setEntityUsuario(Usuario entityUsuario) {
         this.entityUsuario = entityUsuario;
     }
+
+    @Override
+    public String toString() {
+        return "Transaccion{" +
+                "id=" + id +
+                ", fecha=" + fecha +
+                ", hora=" + hora +
+                ", usuario=" + usuario +
+                ", valor=" + valor +
+                ", estado='" + estado + '\'' +
+                ", tipoTransaccion='" + tipoTransaccion + '\'' +
+                '}';
+    }
 }

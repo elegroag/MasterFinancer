@@ -8,14 +8,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class PagoRepository extends AbsRecordLong<Pago> implements PagoDaoRepository {
 
-    private static final String SQL_SELECT = "SELECT id, tipo_persona, identificacion, nombres, FROM pagos WHERE 1;";
+    private static final String SQL_SELECT = "SELECT id, transaccion, medio_pago, compra WHERE 1;";
 
-    private static final String SQL_INSERT = "INSERT INTO pagos (tipo_persona, identificacion, nombres, )VALUES (?, ?, ?, ?, )";
+    private static final String SQL_INSERT = "INSERT INTO pagos (transaccion, medio_pago, compra)VALUES (?, ?, ?)";
 
-    private static final String SQL_UPDATE = "UPDATE pagos SET tipo_persona=?, identificacion=?, ciudad=?, tipo_identificacion=?  WHERE id=?";
+    private static final String SQL_UPDATE = "UPDATE pagos SET transaccion=?, medio_pago=?, compra=? WHERE id=?";
 
     private static final String SQL_DELETE = "DELETE FROM pagos WHERE id=?";
 
@@ -23,7 +24,7 @@ public class PagoRepository extends AbsRecordLong<Pago> implements PagoDaoReposi
         this.connectionTransactional = conn;
         this.table = "pagos";
         this.primaryKey = "id";
-        this.fillable = new String[] { "id", "nombres", "apellidos", "username", "password", "saldo", "tipo_identificacion"};
+        this.fillable = new String[] { "id", "transaccion", "medio_pago", "compra"};
         this.query.put("SQL_SELECT", SQL_SELECT);
         this.query.put("SQL_INSERT", SQL_INSERT);
         this.query.put("SQL_UPDATE", SQL_UPDATE);
@@ -32,26 +33,44 @@ public class PagoRepository extends AbsRecordLong<Pago> implements PagoDaoReposi
 
     @Override
     public Pago recordModel(ResultSet rs) throws SQLException {
-        return null;
+        Long id = rs.getLong("id");
+        Integer transaccion = rs.getInt("transaccion");
+        String medio_pago =  rs.getString("medio_pago");
+        Integer compra =  rs.getInt("compra");
+
+        Pago pago = new Pago();
+        pago.setId(id);
+        pago.setTransaccion(transaccion);
+        pago.setMedioPago(medio_pago);
+        pago.setCompra(compra);
+        return pago;
     }
 
     @Override
     public Integer prepareModel(PreparedStatement stmt, Pago use) throws SQLException {
-        return null;
+        stmt.setInt(1, use.getTransaccion());
+        stmt.setString(2, use.getMedioPago());
+        stmt.setInt(3, use.getCompra());
+        return stmt.executeUpdate();
     }
 
     @Override
     public Integer prepareUpdate(PreparedStatement stmt, Pago use) throws SQLException {
-        return null;
+        stmt.setInt(1, use.getTransaccion());
+        stmt.setString(2, use.getMedioPago());
+        stmt.setInt(3, use.getCompra());
+        stmt.setLong(4, use.getId());
+        return stmt.executeUpdate();
     }
 
     @Override
     public Integer prepareDelete(PreparedStatement stmt, Pago use) throws SQLException {
-        return null;
+        stmt.setLong(1, use.getId());
+        return stmt.executeUpdate();
     }
 
     @Override
-    public Pago search(Pago use) throws DaoException {
-        return null;
+    public Optional<Pago> search(Pago use) throws DaoException {
+        return Optional.empty();
     }
 }

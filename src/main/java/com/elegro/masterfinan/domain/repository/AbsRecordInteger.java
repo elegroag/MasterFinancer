@@ -25,6 +25,9 @@ public abstract class AbsRecordInteger<T> {
     public abstract Integer prepareUpdate(PreparedStatement stmt, T use) throws SQLException;
     public abstract Integer prepareDelete(PreparedStatement stmt, T use) throws  SQLException;
 
+    public Integer getInsertId() {
+        return insertId;
+    }
 
     public T findById(Integer id) throws DaoException {
         fields = String.join(",", fillable);
@@ -53,7 +56,7 @@ public abstract class AbsRecordInteger<T> {
         List<T> lista = new ArrayList<>();
         try {
             conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
-            stmt = conn.prepareStatement(this.query.get("SQl_SELECT"));
+            stmt = conn.prepareStatement(this.query.get("SQL_SELECT"));
             rs = stmt.executeQuery();
             try {
                 while (rs.next()) {

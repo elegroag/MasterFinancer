@@ -18,13 +18,15 @@ import java.util.*;
 public class ComprasController {
 
     @Autowired
+    ResponseApi response;
+    @Autowired
     CompraService compraService;
     @Autowired
     TransaccionService transaccionService;
     @Autowired
     PagoService pagoService;
 
-    @PostMapping("/crear")
+    @PostMapping("/registrarCompraFull")
     public Compra crearTransaccionCompra(@RequestBody Map<String, String> request){
 
         List<Transaccion> transacciones = new ArrayList<>();
@@ -87,13 +89,41 @@ public class ComprasController {
         return compra;
     }
 
-    @GetMapping("/buscar")
-    public String buscar(){
-        return "";
+    @PostMapping("/crear")
+    public Optional<Compra> crear(@RequestBody Compra compra) {
+        return compraService.crear(compra);
     }
+
+    @GetMapping("/buscar")
+    public Optional<Compra> buscar(@RequestParam String id){
+        Integer _id = Integer.parseInt(id);
+        return compraService.buscar(_id);
+    }
+
+    @PutMapping("/actualizar")
+    public IResponseApi actualiza(@RequestBody Compra compra, @RequestParam String id){
+        Integer _id = Integer.parseInt(id);
+        if (compraService.actualiza(compra, _id))
+        {
+            response.setMessage("El proceso se completo con éxito");
+            response.setSuccess(true);
+        }else{
+            response.setMessage("Error no se pueden actualizar, ha generado un error");
+            response.setSuccess(true);
+        }
+        return response;
+    }
+
     @DeleteMapping("/borrar")
-    public String borrarCompraTransaccion(Integer idCompra){
-        //se debe borrar los pagos, las transacciones y la compra especificada
-        return "";
+    public IResponseApi borrar(@RequestBody Map<String, String> request){
+        Integer _id = Integer.parseInt(request.get("id"));
+        if (compraService.borrar(_id)) {
+            response.setMessage("El proceso se completo con éxito");
+            response.setSuccess(true);
+        }else{
+            response.setMessage("Error no se puede borrar, ha generado un error");
+            response.setSuccess(false);
+        }
+        return response;
     }
 }

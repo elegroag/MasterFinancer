@@ -15,7 +15,7 @@ public class CompraService {
     @Autowired
     Models models;
 
-    public List<Compra> renderLista(){
+    public List<Compra> listaCompras(){
         try{
             return models.entityCompra().findAll();
         }catch (DaoException err ){
@@ -27,6 +27,42 @@ public class CompraService {
         try{
             return Optional.ofNullable(models.entityCompra().insert(compra));
         }catch (DaoException err ){
+            return null;
+        }
+    }
+
+    public boolean borrar(Integer compraId) {
+        return buscar(compraId).map(_compra -> {
+            try {
+                models.entityCompra().delete(_compra);
+            } catch (DaoException e) {
+                throw new RuntimeException(e);
+            }
+            return true;
+        }).orElse(false);
+    }
+
+    public boolean actualiza(Compra compra, Integer id){
+        return buscar(id).map(_compra -> {
+            try {
+                _compra.setEstadoCredito(compra.getEstadoCredito());
+                _compra.setPersona(compra.getPersona());
+                _compra.setSaldoPendiente(compra.getSaldoPendiente());
+                _compra.setFechaInicial(compra.getFechaInicial());
+                _compra.setFechaFinal(compra.getFechaFinal());
+                _compra.setTransacciones(compra.getTransacciones());
+                _compra.setValorCompra(compra.getValorCompra());
+                return models.entityCompra().update(_compra);
+            } catch (DaoException e) {
+                throw new RuntimeException(e);
+            }
+        }).orElse(false);
+    }
+
+    public Optional<Compra> buscar(Integer compraId){
+        try {
+            return Optional.ofNullable(models.entityCompra().findById(compraId));
+        }catch (DaoException err){
             return null;
         }
     }

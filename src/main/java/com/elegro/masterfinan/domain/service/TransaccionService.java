@@ -32,8 +32,11 @@ public class TransaccionService {
     }
 
     public Optional<Transaccion> crear(Transaccion transaccion){
-        try{
-            return Optional.ofNullable(models.entityTransaccion().insert(transaccion));
+        try {
+            models.entityTransaccion().insert(transaccion);
+            Integer id = models.entityTransaccion().getInsertId();
+            transaccion.setId(id);
+            return Optional.ofNullable(transaccion);
         }catch (DaoException err ){
             return null;
         }

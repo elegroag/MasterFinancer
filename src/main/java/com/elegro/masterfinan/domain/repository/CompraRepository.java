@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class CompraRepository extends AbsRecordInteger<Compra> implements CompraDaoRepository {
 
@@ -86,7 +87,7 @@ public class CompraRepository extends AbsRecordInteger<Compra> implements Compra
     }
 
     @Override
-    public Compra search(Compra use) throws DaoException {
+    public Optional<Compra> search(Compra use) throws DaoException {
         return null;
     }
 }
