@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class PagoRepository extends AbsRecordLong<Pago> implements PagoDaoRepository {
 
-    private static final String SQL_SELECT = "SELECT id, transaccion, medio_pago, compra WHERE 1;";
+    private static final String SQL_SELECT = "SELECT id, transaccion, medio_pago, compra FROM pagos WHERE 1;";
 
     private static final String SQL_INSERT = "INSERT INTO pagos (transaccion, medio_pago, compra)VALUES (?, ?, ?)";
 

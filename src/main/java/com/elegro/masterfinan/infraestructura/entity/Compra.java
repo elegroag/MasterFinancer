@@ -133,4 +133,24 @@ public class Compra {
     public void setDetalles(List<CompraDetalle> detalles) {
         this.detalles = detalles;
     }
+
+    @Override
+    public String toString() {
+        return "Compra{" +
+                "id=" + id +
+                ", fechaInicial=" + fechaInicial +
+                ", fechaFinal=" + fechaFinal +
+                ", estadoCredito='" + estadoCredito + '\'' +
+                ", tipoPago='" + tipoPago + '\'' +
+                ", persona=" + persona +
+                ", saldoPendiente=" + saldoPendiente +
+                ", valorCompra=" + valorCompra +
+                ", usuario=" + usuario +
+                ", entityUsuario=" + entityUsuario +
+                ", entityPersona=" + entityPersona +
+                ", detalles=" + detalles +
+                ", transacciones=" + transacciones +
+                ", pagos=" + pagos +
+                '}';
+    }
 }

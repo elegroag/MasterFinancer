@@ -51,15 +51,11 @@ public abstract class AbsRecordLong<T> {
     }
 
     public List<T> findAll() throws DaoException {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
         List<T> lista = new ArrayList<>();
-
         try {
-            conn = this.connectionTransactional != null ? this.connectionTransactional : MysqlConnector.getConnection();
-            stmt = conn.prepareStatement(this.query.get("SQL_SELECT"));
-            rs = stmt.executeQuery();
+            Connection conn = this.connectionTransactional;
+            PreparedStatement stmt = conn.prepareStatement(this.query.get("SQL_SELECT"));
+            ResultSet rs = stmt.executeQuery();
             try {
                 while (rs.next()) {
                     lista.add(recordModel(rs));

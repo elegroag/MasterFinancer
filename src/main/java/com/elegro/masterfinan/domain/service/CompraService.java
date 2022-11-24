@@ -24,9 +24,13 @@ public class CompraService {
     }
 
     public Optional<Compra> crear(Compra compra){
-        try{
-            return Optional.ofNullable(models.entityCompra().insert(compra));
+        try {
+            models.entityCompra().insert(compra);
+            Integer id = models.entityCompra().getInsertId();
+            compra.setId(id);
+            return Optional.of(compra);
         }catch (DaoException err ){
+            System.out.println(err.getMessage());
             return null;
         }
     }

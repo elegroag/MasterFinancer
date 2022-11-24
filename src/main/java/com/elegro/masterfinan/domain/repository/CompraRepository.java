@@ -13,11 +13,11 @@ import java.util.Optional;
 
 public class CompraRepository extends AbsRecordInteger<Compra> implements CompraDaoRepository {
 
-    private static final String SQL_SELECT = "SELECT id, estado_credito, fecha_inicial, fecha_final, saldo_pendiente, persona, tipo_pago, valor_compra FROM compras WHERE 1;";
+    private static final String SQL_SELECT = "SELECT id, estado_credito, fecha_inicial, fecha_final, saldo_pendiente, persona, tipo_pago, valor_compra, usuario FROM compras WHERE 1;";
 
-    private static final String SQL_INSERT = "INSERT INTO compras (estado_credito, fecha_inicial, fecha_final, saldo_pendiente, persona, tipo_pago, valor_compra)VALUES(?, ?, ?, ?, ?, ?, ?);";
+    private static final String SQL_INSERT = "INSERT INTO compras (estado_credito, fecha_inicial, fecha_final, saldo_pendiente, persona, tipo_pago, valor_compra, usuario)VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
 
-    private static final String SQL_UPDATE = "UPDATE compras SET estado_credito=?, fecha_inicial=?, fecha_final=?, saldo_pendiente=?, persona=?, tipo_pago=?, valor_compra=? WHERE id=?;";
+    private static final String SQL_UPDATE = "UPDATE compras SET estado_credito=?, fecha_inicial=?, fecha_final=?, saldo_pendiente=?, persona=?, tipo_pago=?, valor_compra=?, usuario=? WHERE id=?;";
 
     private static final String SQL_DELETE = "DELETE FROM compras WHERE id=?;";
 
@@ -25,7 +25,7 @@ public class CompraRepository extends AbsRecordInteger<Compra> implements Compra
         this.connectionTransactional = conn;
         this.table = "compras";
         this.primaryKey = "id";
-        this.fillable = new String[] { "id", "estado_credito", "fecha_inicial", "fecha_final", "saldo_pendiente", "persona", "tipo_pago", "valor_compra"};
+        this.fillable = new String[] { "id", "estado_credito", "fecha_inicial", "fecha_final", "saldo_pendiente", "persona", "tipo_pago", "valor_compra", "usuario"};
         this.query.put("SQL_SELECT", SQL_SELECT);
         this.query.put("SQL_INSERT", SQL_INSERT);
         this.query.put("SQL_UPDATE", SQL_UPDATE);
@@ -42,6 +42,7 @@ public class CompraRepository extends AbsRecordInteger<Compra> implements Compra
         Long perdona = rs.getLong("persona");
         String tipo_pago = rs.getString("tipo_pago");
         Double valor_compra = rs.getDouble("valor_compra");
+        Long usuario = rs.getLong("usuario");
 
         Compra compra = new Compra();
         compra.setId(id);
@@ -52,6 +53,7 @@ public class CompraRepository extends AbsRecordInteger<Compra> implements Compra
         compra.setTipoPago(tipo_pago);
         compra.setValorCompra(valor_compra);
         compra.setPersona(perdona);
+        compra.setUsuario(usuario);
         return compra;
     }
 
@@ -64,6 +66,7 @@ public class CompraRepository extends AbsRecordInteger<Compra> implements Compra
         stmt.setLong(5, use.getPersona());
         stmt.setString(6, use.getTipoPago());
         stmt.setDouble(7, use.getValorCompra());
+        stmt.setLong(8, use.getUsuario());
         return stmt.executeUpdate();
     }
 
@@ -76,7 +79,8 @@ public class CompraRepository extends AbsRecordInteger<Compra> implements Compra
         stmt.setLong(5, use.getPersona());
         stmt.setString(6, use.getTipoPago());
         stmt.setDouble(7, use.getValorCompra());
-        stmt.setInt(8, use.getId());
+        stmt.setLong(8, use.getUsuario());
+        stmt.setInt(9, use.getId());
         return stmt.executeUpdate();
     }
 

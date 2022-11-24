@@ -70,27 +70,27 @@ Pago Borrar Recurso
 http://localhost:8090/master-financer/api/pagos/borrar   
 
 Pago Editar Recurso Pasando Parametro Id   
-http://localhost:8090/master-financer/api/pago/actualizar?id=1
+http://localhost:8090/master-financer/api/pagos/actualizar?id=1
 
 Pago Listar Todos Los Recursos     
-http://localhost:8090/master-financer/api/pago/todo
+http://localhost:8090/master-financer/api/pagos/todo
 
 Pago Buscar Un Recurso Pasando Parametro Id  
-http://localhost:8090/master-financer/api/pago/buscar?id=4
+http://localhost:8090/master-financer/api/pagos/buscar?id=4
 
 
 Compras:  
 Compra Crear Recurso     
-http://localhost:8090/master-financer/api/compra/crear
+http://localhost:8090/master-financer/api/compras/crear
 
 Compra Borrar Recurso        
-http://localhost:8090/master-financer/api/compra/borrar
+http://localhost:8090/master-financer/api/compras/borrar
 
 Compra Editar Recurso Pasando Parametro Id   
-http://localhost:8090/master-financer/api/compra/actualizar?id=1
+http://localhost:8090/master-financer/api/compras/actualizar?id=1
 
 Compra Listar Todos Los Recursos     
-http://localhost:8090/master-financer/api/compra/todo
+http://localhost:8090/master-financer/api/compras/todo
 
 Pago Buscar Un Recurso Pasando Parametro Id  
-http://localhost:8090/master-financer/api/pago/buscar?id=4   
+http://localhost:8090/master-financer/api/compras/buscar?id=4   

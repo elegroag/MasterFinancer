@@ -15,19 +15,28 @@ import java.util.Optional;
 public class PagosController {
 
     @Autowired
-    ResponseApi response;
+    ResponseApi<Pago> response;
 
     @Autowired
     PagoService pagoService;
 
     @GetMapping("/todo")
-    public List<Pago> listarTransacciones(){
+    public List<Pago> listarPagos(){
         return pagoService.listaPagos();
     }
 
     @PostMapping("/crear")
-    public Optional<Pago> crear(@RequestBody Pago pago){
-        return pagoService.crear(pago);
+    public IResponseApi crear(@RequestBody Pago pago){
+        return pagoService.crear(pago).map(_pago -> {
+            response.setSuccess(true);
+            response.setMessage("Registro completado con éxito");
+            response.setData(Optional.ofNullable(_pago));
+            return response;
+        }).orElseGet(() -> {
+            response.setSuccess(false);
+            response.setMessage("Error el registro no es posible");
+            return response;
+        });
     }
 
     @DeleteMapping("/borrar")
@@ -52,7 +61,7 @@ public class PagosController {
             response.setSuccess(true);
         }else{
             response.setMessage("Error no se pueden actualizar, ha generado un error");
-            response.setSuccess(true);
+            response.setSuccess(false);
         }
         return response;
     }

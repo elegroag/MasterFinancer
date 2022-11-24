@@ -18,13 +18,18 @@ import java.util.*;
 public class ComprasController {
 
     @Autowired
-    ResponseApi response;
+    ResponseApi<Compra> response;
     @Autowired
     CompraService compraService;
     @Autowired
     TransaccionService transaccionService;
     @Autowired
     PagoService pagoService;
+
+    @GetMapping("/todo")
+    public List<Compra> listarCompras(){
+        return compraService.listaCompras();
+    }
 
     @PostMapping("/registrarCompraFull")
     public Compra crearTransaccionCompra(@RequestBody Map<String, String> request){
@@ -90,8 +95,17 @@ public class ComprasController {
     }
 
     @PostMapping("/crear")
-    public Optional<Compra> crear(@RequestBody Compra compra) {
-        return compraService.crear(compra);
+    public IResponseApi create(@RequestBody Compra compra) {
+        return compraService.crear(compra).map(_compra -> {
+            response.setSuccess(true);
+            response.setMessage("Registro completado con éxito");
+            response.setData(Optional.of(_compra));
+            return response;
+        }).orElseGet(() -> {
+            response.setSuccess(false);
+            response.setMessage("Error el registro no es posible");
+            return response;
+        });
     }
 
     @GetMapping("/buscar")
@@ -107,9 +121,10 @@ public class ComprasController {
         {
             response.setMessage("El proceso se completo con éxito");
             response.setSuccess(true);
+            response.setData(buscar(id));
         }else{
             response.setMessage("Error no se pueden actualizar, ha generado un error");
-            response.setSuccess(true);
+            response.setSuccess(false);
         }
         return response;
     }
@@ -120,6 +135,7 @@ public class ComprasController {
         if (compraService.borrar(_id)) {
             response.setMessage("El proceso se completo con éxito");
             response.setSuccess(true);
+            response.setData(Optional.empty());
         }else{
             response.setMessage("Error no se puede borrar, ha generado un error");
             response.setSuccess(false);

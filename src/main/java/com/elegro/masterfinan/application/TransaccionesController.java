@@ -15,7 +15,7 @@ import java.util.Optional;
 public class TransaccionesController {
 
     @Autowired
-    ResponseApi response;
+    ResponseApi<Transaccion> response;
 
     @Autowired
     TransaccionService transaccionService;
