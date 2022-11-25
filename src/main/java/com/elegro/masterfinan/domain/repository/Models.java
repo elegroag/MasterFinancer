@@ -77,4 +77,20 @@ public class Models extends ManagerRepository {
         }
         return ingresoCategorias;
     }
+
+    @Override
+    public ReferenciaProductoDaoRepository entityReferenciaProducto() {
+        if(referenciaProductos == null){
+            referenciaProductos = new ReferenciaProductoRepository(conn);
+        }
+        return referenciaProductos;
+    }
+
+    @Override
+    public CompraDetalleDaoRepository entityCompraDetalle() {
+        if(compraDetalles == null){
+            compraDetalles = new CompraDetalleRepository(conn);
+        }
+        return compraDetalles;
+    }
 }

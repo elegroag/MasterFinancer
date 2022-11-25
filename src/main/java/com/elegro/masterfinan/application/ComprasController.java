@@ -1,9 +1,11 @@
 package com.elegro.masterfinan.application;
 
+import com.elegro.masterfinan.domain.service.CompraDetalleService;
 import com.elegro.masterfinan.domain.service.CompraService;
 import com.elegro.masterfinan.domain.service.PagoService;
 import com.elegro.masterfinan.domain.service.TransaccionService;
 import com.elegro.masterfinan.infraestructura.entity.Compra;
+import com.elegro.masterfinan.infraestructura.entity.CompraDetalle;
 import com.elegro.masterfinan.infraestructura.entity.Pago;
 import com.elegro.masterfinan.infraestructura.entity.Transaccion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class ComprasController {
     TransaccionService transaccionService;
     @Autowired
     PagoService pagoService;
+
+    @Autowired
+    CompraDetalleService compraDetalleService;
 
     @GetMapping("/todo")
     public List<Compra> listarCompras(){
@@ -140,6 +145,12 @@ public class ComprasController {
             response.setMessage("Error no se puede borrar, ha generado un error");
             response.setSuccess(false);
         }
+        return response;
+    }
+
+    @PostMapping("/agregar_detalles_compra")
+    public IResponseApi detallesCompra(@RequestBody List<CompraDetalle> compraDetalles){
+        compraDetalles.forEach( compraDetalle -> compraDetalleService.crear(compraDetalle));
         return response;
     }
 }
