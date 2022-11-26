@@ -8,7 +8,6 @@ import com.elegro.masterfinan.application.response.AuthenticationResponse;
 
 import com.elegro.masterfinan.domain.repository.Models;
 import com.elegro.masterfinan.domain.service.MasterUserDetailsService;
-import com.elegro.masterfinan.domain.service.UsuarioService;
 import com.elegro.masterfinan.infraestructura.entity.Usuario;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +62,7 @@ public class AuthController {
 
     @PostMapping("/registration")
     public ResponseEntity<AuthenticationResponse> registrationAuth(@RequestBody AuthRegistrationRequest request){
+        AuthenticationResponse authResponse = null;
         try {
             try {
                 Map<String, String> messages = validationRequire(request);
@@ -83,21 +83,28 @@ public class AuthController {
                     _user.setTerminos_condiciones(request.isTerminos_condiciones());
                     _user.setSaldo(0.0);
                     models.entityUsuario().insert(_user);
+                } else {
+                    throw new DebugException("El usuario ya se encuentra registrado");
                 }
                 try {
                     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(_user.getUsername(), _user.getPassword()));
                     UserDetails userDetails = new User(_user.getUsername(), "{noop}"+_user.getPassword(), new ArrayList<>());
                     String jwt = jwtUtil.generateToken(userDetails);
-                    return new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
+                    authResponse = new AuthenticationResponse(jwt);
+                    authResponse.setSuccess(true);
+                    authResponse.setMessage("Solicitud Ok");
+                    return new ResponseEntity<>(authResponse, HttpStatus.OK);
                 } catch (BadCredentialsException err){
                     System.out.println(err.getMessage());
                     return new ResponseEntity<>(HttpStatus.FORBIDDEN);
                 }
             }catch (DebugException debug)
             {
-                System.out.println(debug.getMessage());
                 System.out.println(DebugException.getVariables());
-                return new ResponseEntity<>( HttpStatus.FORBIDDEN);
+                authResponse = new AuthenticationResponse();
+                authResponse.setSuccess(false);
+                authResponse.setMessage(debug.getMessage());
+                return new ResponseEntity<>(authResponse, HttpStatus.FORBIDDEN);
             } catch (DaoException e) {
                 throw new RuntimeException(e);
             }
