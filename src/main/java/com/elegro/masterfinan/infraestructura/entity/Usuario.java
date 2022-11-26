@@ -104,4 +104,21 @@ public class Usuario {
     public void setTransacciones(List<Transaccion> transacciones) {
         this.transacciones = transacciones;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombres='" + nombres + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", saldo=" + saldo +
+                ", tipoIdentificacion=" + tipoIdentificacion +
+                ", compras=" + compras +
+                ", transacciones=" + transacciones +
+                ", email='" + email + '\'' +
+                ", terminos_condiciones=" + terminos_condiciones +
+                '}';
+    }
 }

@@ -6,15 +6,18 @@ import com.elegro.masterfinan.application.security.JWTUtil;
 import com.elegro.masterfinan.application.response.AuthenticationRequest;
 import com.elegro.masterfinan.application.response.AuthenticationResponse;
 
+import com.elegro.masterfinan.domain.repository.Models;
 import com.elegro.masterfinan.domain.service.MasterUserDetailsService;
 import com.elegro.masterfinan.domain.service.UsuarioService;
 import com.elegro.masterfinan.infraestructura.entity.Usuario;
+import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -33,6 +37,9 @@ import java.util.regex.Pattern;
 public class AuthController {
 
     @Autowired
+    Models models;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -40,9 +47,6 @@ public class AuthController {
 
     @Autowired
     private JWTUtil jwtUtil;
-
-    @Autowired
-    private UsuarioService usuarioService;
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> createToken(@RequestBody AuthenticationRequest request){
@@ -52,6 +56,7 @@ public class AuthController {
             String jwt = jwtUtil.generateToken(userDetails);
             return new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
         } catch (BadCredentialsException err){
+            System.out.println(err.getMessage());
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
@@ -65,11 +70,9 @@ public class AuthController {
                 if(messages.size() > 0){
                     throw new DebugException("Error de validación en los datos de registro");
                 }
-                Usuario _user;
-                if (usuarioService.buscar(request.getDocumento()).isPresent()) {
-                    _user = usuarioService.buscar(request.getDocumento()).get();
-                } else {
-                    _user = new Usuario();
+                Usuario _user = models.entityUsuario().findById(request.getDocumento());
+                if(_user == null){
+                     _user = new Usuario();
                     _user.setId(request.getDocumento());
                     _user.setUsername(request.getUsuario());
                     _user.setPassword(request.getClave());
@@ -79,14 +82,15 @@ public class AuthController {
                     _user.setEmail(request.getEmail());
                     _user.setTerminos_condiciones(request.isTerminos_condiciones());
                     _user.setSaldo(0.0);
-                    usuarioService.crear(_user);
+                    models.entityUsuario().insert(_user);
                 }
                 try {
                     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(_user.getUsername(), _user.getPassword()));
-                    UserDetails userDetails = masterUserDetailsService.loadUserByUsername(_user.getUsername());
+                    UserDetails userDetails = new User(_user.getUsername(), "{noop}"+_user.getPassword(), new ArrayList<>());
                     String jwt = jwtUtil.generateToken(userDetails);
                     return new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
-                } catch (BadCredentialsException err) {
+                } catch (BadCredentialsException err){
+                    System.out.println(err.getMessage());
                     return new ResponseEntity<>(HttpStatus.FORBIDDEN);
                 }
             }catch (DebugException debug)
@@ -94,8 +98,11 @@ public class AuthController {
                 System.out.println(debug.getMessage());
                 System.out.println(DebugException.getVariables());
                 return new ResponseEntity<>( HttpStatus.FORBIDDEN);
+            } catch (DaoException e) {
+                throw new RuntimeException(e);
             }
         }catch (HttpClientErrorException.BadRequest err){
+            System.out.println(err.getMessage());
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
@@ -111,7 +118,7 @@ public class AuthController {
             String regexEmail = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
             Pattern pattern = Pattern.compile(regexEmail);
             Matcher matcher = pattern.matcher(request.getEmail());
-            if(matcher.matches()){
+            if(!matcher.matches()){
                 messages.put("email", " Error el email no posee un valor valido para continuar");
             }
         }

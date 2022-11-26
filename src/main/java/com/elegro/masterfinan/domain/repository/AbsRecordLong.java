@@ -121,8 +121,6 @@ public abstract class AbsRecordLong<T> {
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         this.insertId = generatedKeys.getLong(1);
-                    } else {
-                        throw new SQLException("Creating user failed, no ID obtained.");
                     }
                 }
             }

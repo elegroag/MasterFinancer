@@ -124,8 +124,6 @@ public abstract class AbsRecordInteger<T> {
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         this.insertId = generatedKeys.getInt(1);
-                    } else {
-                        throw new SQLException("Creating user failed, no ID obtained.");
                     }
                 }
             }
