@@ -3,6 +3,7 @@ package com.elegro.masterfinan.domain.repository;
 import com.elegro.masterfinan.infraestructura.cruds.TransaccionDaoRepository;
 import com.elegro.masterfinan.infraestructura.entity.Transaccion;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,7 +40,7 @@ public class TransaccionRepository extends AbsRecordInteger<Transaccion> impleme
         return Optional.empty();
     }
 
-    public Transaccion recordModel(ResultSet rs) throws SQLException {
+    public Transaccion recordModel(ResultSet rs) throws SQLException, DaoException {
         Integer id = rs.getInt("id");
         LocalDate fecha = LocalDate.parse(rs.getString("fecha"));
         Long usuario = rs.getLong("usuario");
@@ -47,7 +48,7 @@ public class TransaccionRepository extends AbsRecordInteger<Transaccion> impleme
         String estado = rs.getString("estado");
         LocalTime hora = LocalTime.parse(rs.getString("hora"));
         String tipoTransaccion = rs.getString("tipo_transaccion");
-
+        Models models = new Models();
         Transaccion tra = new Transaccion();
         tra.setId(id);
         tra.setFecha(fecha);
@@ -56,7 +57,7 @@ public class TransaccionRepository extends AbsRecordInteger<Transaccion> impleme
         tra.setEstado(estado);
         tra.setHora(hora);
         tra.setTipoTransaccion(tipoTransaccion);
-        tra.setEntityUsuario(null);
+        tra.setEntityUsuario(models.entityUsuario().findById(usuario));
         return tra;
     }
 

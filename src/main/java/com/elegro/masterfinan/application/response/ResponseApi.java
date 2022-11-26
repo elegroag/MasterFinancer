@@ -1,4 +1,4 @@
-package com.elegro.masterfinan.application;
+package com.elegro.masterfinan.application.response;
 
 import org.springframework.stereotype.Component;
 
@@ -11,6 +11,16 @@ public class ResponseApi<T> implements IResponseApi {
     private String message;
 
     private Optional<T> data;
+
+    private Integer codigo;
+
+    public Integer getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
 
     public Optional<T> getData() {
         return data;

@@ -35,7 +35,7 @@ public class UsuarioRepository extends AbsRecordLong<Usuario> implements Usuario
 
     @Override
     public Optional<Usuario> search(Usuario use) throws DaoException {
-        return  null;
+        return  Optional.empty();
     }
 
     public Usuario recordModel(ResultSet rs) throws SQLException {

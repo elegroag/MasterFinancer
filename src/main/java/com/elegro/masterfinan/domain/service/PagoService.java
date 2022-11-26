@@ -30,7 +30,7 @@ public class PagoService {
             pago.setId(id);
             return Optional.ofNullable(pago);
         }catch (DaoException er){
-            return null;
+            return Optional.empty();
         }
     }
 
@@ -62,7 +62,7 @@ public class PagoService {
         try{
             return Optional.ofNullable(models.entityPagos().findById(pagoId));
         }catch (DaoException err){
-            return null;
+            return Optional.empty();
         }
     }
 

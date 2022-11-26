@@ -1,7 +1,10 @@
-package com.elegro.masterfinan.application;
+package com.elegro.masterfinan.application.web;
 
-import com.elegro.masterfinan.domain.service.ReferenciaProductoService;
-import com.elegro.masterfinan.infraestructura.entity.ReferenciaProducto;
+
+import com.elegro.masterfinan.application.response.IResponseApi;
+import com.elegro.masterfinan.application.response.ResponseApi;
+import com.elegro.masterfinan.domain.service.PagoService;
+import com.elegro.masterfinan.infraestructura.entity.Pago;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,26 +13,26 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/referencia_productos")
-public class ReferenciaProductosController {
+@RequestMapping("/pagos")
+public class PagosController {
 
     @Autowired
-    ResponseApi<ReferenciaProducto> response;
+    ResponseApi<Pago> response;
 
     @Autowired
-    ReferenciaProductoService referenciaProductoService;
+    PagoService pagoService;
 
     @GetMapping("/todo")
-    public List<ReferenciaProducto> listarPagos(){
-        return referenciaProductoService.listaReferencias();
+    public List<Pago> listarPagos(){
+        return pagoService.listaPagos();
     }
 
     @PostMapping("/crear")
-    public IResponseApi crear(@RequestBody ReferenciaProducto referenciaProducto){
-        return referenciaProductoService.crear(referenciaProducto).map(_referenciaProducto -> {
+    public IResponseApi crear(@RequestBody Pago pago){
+        return pagoService.crear(pago).map(_pago -> {
             response.setSuccess(true);
             response.setMessage("Registro completado con éxito");
-            response.setData(Optional.ofNullable(_referenciaProducto));
+            response.setData(Optional.ofNullable(_pago));
             return response;
         }).orElseGet(() -> {
             response.setSuccess(false);
@@ -41,7 +44,7 @@ public class ReferenciaProductosController {
     @DeleteMapping("/borrar")
     public IResponseApi borrar(@RequestBody Map<String, String> request){
         Long _id = Long.parseLong(request.get("id"));
-        if (referenciaProductoService.borrar(_id)) {
+        if (pagoService.borrar(_id)) {
             response.setMessage("El proceso se completo con éxito");
             response.setSuccess(true);
         }else{
@@ -52,9 +55,9 @@ public class ReferenciaProductosController {
     }
 
     @PutMapping("/actualizar")
-    public IResponseApi actualiza(@RequestBody ReferenciaProducto referenciaProducto, @RequestParam String id){
+    public IResponseApi actualiza(@RequestBody Pago pago, @RequestParam String id){
         Long _id = Long.parseLong(id);
-        if (referenciaProductoService.actualiza(referenciaProducto, _id))
+        if (pagoService.actualiza(pago, _id))
         {
             response.setMessage("El proceso se completo con éxito");
             response.setSuccess(true);
@@ -66,9 +69,9 @@ public class ReferenciaProductosController {
     }
 
     @GetMapping("/buscar")
-    public Optional<ReferenciaProducto> buscar(@RequestParam String id){
+    public Optional<Pago> buscar(@RequestParam String id){
         Long _id = Long.parseLong(id);
-        return referenciaProductoService.buscar(_id);
+        return pagoService.buscar(_id);
     }
 
 }

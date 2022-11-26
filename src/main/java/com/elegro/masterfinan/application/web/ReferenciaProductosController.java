@@ -1,8 +1,9 @@
-package com.elegro.masterfinan.application;
+package com.elegro.masterfinan.application.web;
 
-
-import com.elegro.masterfinan.domain.service.PagoService;
-import com.elegro.masterfinan.infraestructura.entity.Pago;
+import com.elegro.masterfinan.application.response.IResponseApi;
+import com.elegro.masterfinan.application.response.ResponseApi;
+import com.elegro.masterfinan.domain.service.ReferenciaProductoService;
+import com.elegro.masterfinan.infraestructura.entity.ReferenciaProducto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,30 +12,31 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/pagos")
-public class PagosController {
+@RequestMapping("/referencia_productos")
+public class ReferenciaProductosController {
 
     @Autowired
-    ResponseApi<Pago> response;
+    ResponseApi<ReferenciaProducto> response;
 
     @Autowired
-    PagoService pagoService;
+    ReferenciaProductoService referenciaProductoService;
 
     @GetMapping("/todo")
-    public List<Pago> listarPagos(){
-        return pagoService.listaPagos();
+    public List<ReferenciaProducto> listarProdcutos(){
+        return referenciaProductoService.listaReferencias();
     }
 
     @PostMapping("/crear")
-    public IResponseApi crear(@RequestBody Pago pago){
-        return pagoService.crear(pago).map(_pago -> {
+    public IResponseApi crear(@RequestBody ReferenciaProducto referenciaProducto){
+        return referenciaProductoService.crear(referenciaProducto).map(_referenciaProducto -> {
             response.setSuccess(true);
             response.setMessage("Registro completado con éxito");
-            response.setData(Optional.ofNullable(_pago));
+            response.setData(Optional.of(_referenciaProducto));
             return response;
         }).orElseGet(() -> {
             response.setSuccess(false);
             response.setMessage("Error el registro no es posible");
+            response.setData(Optional.empty());
             return response;
         });
     }
@@ -42,7 +44,7 @@ public class PagosController {
     @DeleteMapping("/borrar")
     public IResponseApi borrar(@RequestBody Map<String, String> request){
         Long _id = Long.parseLong(request.get("id"));
-        if (pagoService.borrar(_id)) {
+        if (referenciaProductoService.borrar(_id)) {
             response.setMessage("El proceso se completo con éxito");
             response.setSuccess(true);
         }else{
@@ -53,9 +55,9 @@ public class PagosController {
     }
 
     @PutMapping("/actualizar")
-    public IResponseApi actualiza(@RequestBody Pago pago, @RequestParam String id){
+    public IResponseApi actualiza(@RequestBody ReferenciaProducto referenciaProducto, @RequestParam String id){
         Long _id = Long.parseLong(id);
-        if (pagoService.actualiza(pago, _id))
+        if (referenciaProductoService.actualiza(referenciaProducto, _id))
         {
             response.setMessage("El proceso se completo con éxito");
             response.setSuccess(true);
@@ -67,9 +69,9 @@ public class PagosController {
     }
 
     @GetMapping("/buscar")
-    public Optional<Pago> buscar(@RequestParam String id){
+    public Optional<ReferenciaProducto> buscar(@RequestParam String id){
         Long _id = Long.parseLong(id);
-        return pagoService.buscar(_id);
+        return referenciaProductoService.buscar(_id);
     }
 
 }

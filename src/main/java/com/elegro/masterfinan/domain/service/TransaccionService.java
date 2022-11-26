@@ -25,9 +25,9 @@ public class TransaccionService {
 
     public Optional<List<Transaccion>> getByIngresoCategoria(Long idCategoria){
         try {
-            return Optional.ofNullable(models.entityTransaccion().findByIngresoCategoria(idCategoria));
+            return Optional.of(models.entityTransaccion().findByIngresoCategoria(idCategoria));
         }catch (DaoException  err){
-            return null;
+            return Optional.empty();
         }
     }
 
@@ -38,18 +38,19 @@ public class TransaccionService {
             transaccion.setId(id);
             return Optional.ofNullable(transaccion);
         }catch (DaoException err ){
-            return null;
+            return Optional.empty();
         }
     }
 
     public boolean borrar(Integer transaccionId) {
         return buscar(transaccionId).map(transaccion -> {
+            boolean flag = false;
             try {
-                models.entityTransaccion().delete(transaccion);
+                flag = models.entityTransaccion().delete(transaccion);
             } catch (DaoException e) {
                 throw new RuntimeException(e);
             }
-            return true;
+            return flag;
         }).orElse(false);
     }
 
@@ -69,9 +70,9 @@ public class TransaccionService {
 
     public Optional<Transaccion> buscar(Integer transaccionId){
         try {
-            return Optional.ofNullable(models.entityTransaccion().findById(transaccionId));
+            return Optional.of(models.entityTransaccion().findById(transaccionId));
         }catch (DaoException err){
-            return null;
+            return Optional.empty();
         }
     }
 

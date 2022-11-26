@@ -1,5 +1,7 @@
-package com.elegro.masterfinan.application;
+package com.elegro.masterfinan.application.web;
 
+import com.elegro.masterfinan.application.response.IResponseApi;
+import com.elegro.masterfinan.application.response.ResponseApi;
 import com.elegro.masterfinan.domain.service.CompraDetalleService;
 import com.elegro.masterfinan.domain.service.CompraService;
 import com.elegro.masterfinan.domain.service.PagoService;
@@ -105,10 +107,12 @@ public class ComprasController {
             response.setSuccess(true);
             response.setMessage("Registro completado con éxito");
             response.setData(Optional.of(_compra));
+            response.setCodigo(200);
             return response;
         }).orElseGet(() -> {
             response.setSuccess(false);
             response.setMessage("Error el registro no es posible");
+            response.setCodigo(500);
             return response;
         });
     }

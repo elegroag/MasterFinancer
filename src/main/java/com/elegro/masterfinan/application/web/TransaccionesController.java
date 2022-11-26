@@ -1,5 +1,7 @@
-package com.elegro.masterfinan.application;
+package com.elegro.masterfinan.application.web;
 
+import com.elegro.masterfinan.application.response.IResponseApi;
+import com.elegro.masterfinan.application.response.ResponseApi;
 import com.elegro.masterfinan.domain.service.TransaccionService;
 import com.elegro.masterfinan.infraestructura.entity.Transaccion;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +52,12 @@ public class TransaccionesController {
         {
             response.setMessage("El proceso se completo con éxito");
             response.setSuccess(true);
+            transaccion.setId(_id);
+            response.setData(Optional.of(transaccion));
         }else{
             response.setMessage("Error no se pueden actualizar, ha generado un error");
-            response.setSuccess(true);
+            response.setSuccess(false);
+            response.setData(Optional.empty());
         }
         return response;
     }

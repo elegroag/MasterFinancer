@@ -31,7 +31,7 @@ public class CompraService {
             return Optional.of(compra);
         }catch (DaoException err ){
             System.out.println(err.getMessage());
-            return null;
+            return Optional.empty();
         }
     }
 
@@ -67,7 +67,7 @@ public class CompraService {
         try {
             return Optional.ofNullable(models.entityCompra().findById(compraId));
         }catch (DaoException err){
-            return null;
+            return Optional.empty();
         }
     }
 

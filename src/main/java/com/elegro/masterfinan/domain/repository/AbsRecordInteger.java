@@ -20,7 +20,7 @@ public abstract class AbsRecordInteger<T> {
     protected Map<String, String> query = new HashMap<>();
 
 
-    public abstract T recordModel(ResultSet rs) throws SQLException;
+    public abstract T recordModel(ResultSet rs) throws SQLException, DaoException;
     public abstract Integer prepareModel(PreparedStatement stmt, T use) throws SQLException ;
     public abstract Integer prepareUpdate(PreparedStatement stmt, T use) throws SQLException;
     public abstract Integer prepareDelete(PreparedStatement stmt, T use) throws  SQLException;

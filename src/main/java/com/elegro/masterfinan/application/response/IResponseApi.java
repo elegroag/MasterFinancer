@@ -1,4 +1,4 @@
-package com.elegro.masterfinan.application;
+package com.elegro.masterfinan.application.response;
 
 public interface IResponseApi {
      String render();

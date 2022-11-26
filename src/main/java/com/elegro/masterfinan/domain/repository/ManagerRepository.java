@@ -14,11 +14,8 @@ abstract class ManagerRepository {
     protected PagoDaoRepository pagos = null;
     protected GastoCategoriaDaoRepository gastoCategorias = null;
     protected IngresoCategoriaDaoRepository ingresoCategorias = null;
-
     protected ReferenciaProductoDaoRepository referenciaProductos = null;
-
     protected CompraDetalleDaoRepository compraDetalles = null;
-
 
     public abstract UsuarioDaoRepository entityUsuario();
     public abstract PersonaDaoRepository entityPersona();
