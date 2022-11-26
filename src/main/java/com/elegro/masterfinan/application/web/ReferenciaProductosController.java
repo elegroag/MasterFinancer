@@ -16,10 +16,10 @@ import java.util.Optional;
 public class ReferenciaProductosController {
 
     @Autowired
-    ResponseApi<ReferenciaProducto> response;
+    private ResponseApi<ReferenciaProducto> response;
 
     @Autowired
-    ReferenciaProductoService referenciaProductoService;
+    private ReferenciaProductoService referenciaProductoService;
 
     @GetMapping("/todo")
     public List<ReferenciaProducto> listarProdcutos(){

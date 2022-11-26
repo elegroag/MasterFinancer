@@ -13,7 +13,7 @@ import java.util.Optional;
 public class ReferenciaProductoService {
 
     @Autowired
-    Models models;
+    private Models models;
 
     public List<ReferenciaProducto> listaReferencias(){
         try{

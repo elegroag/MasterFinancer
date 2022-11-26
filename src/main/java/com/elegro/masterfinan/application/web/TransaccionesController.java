@@ -17,10 +17,10 @@ import java.util.Optional;
 public class TransaccionesController {
 
     @Autowired
-    ResponseApi<Transaccion> response;
+    private ResponseApi<Transaccion> response;
 
     @Autowired
-    TransaccionService transaccionService;
+    private TransaccionService transaccionService;
 
     @GetMapping("/todo")
     public List<Transaccion> listarTransacciones(){

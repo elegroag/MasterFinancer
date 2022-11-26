@@ -13,7 +13,7 @@ import java.util.Optional;
 public class PersonaService {
 
     @Autowired
-    Models models;
+    private Models models;
 
     public List<Persona> listaTerceros() {
         try{

@@ -13,7 +13,7 @@ import java.util.Optional;
 public class TransaccionService {
 
     @Autowired
-    Models models;
+    private Models models;
 
     public List<Transaccion> renderLista(){
         try{

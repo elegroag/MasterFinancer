@@ -16,7 +16,7 @@ import java.util.Optional;
 public class HomeController {
 
     @Autowired
-    UsuarioService usuarioService;
+    private UsuarioService usuarioService;
 
     @GetMapping("/index")
     public Optional<List<Usuario>> listaUsuarios() throws DaoException {

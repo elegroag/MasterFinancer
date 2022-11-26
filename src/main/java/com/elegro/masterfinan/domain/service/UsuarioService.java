@@ -13,7 +13,7 @@ import java.util.Optional;
 public class UsuarioService {
 
     @Autowired
-    Models models;
+    private Models models;
 
     public Optional<List<Usuario>> getUsuarios() throws DaoException {
         return Optional.ofNullable(this.models.entityUsuario().findAll());

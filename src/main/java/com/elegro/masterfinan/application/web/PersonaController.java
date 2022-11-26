@@ -16,10 +16,10 @@ import java.util.Optional;
 public class PersonaController {
 
     @Autowired
-    ResponseApi<Persona> response;
+    private ResponseApi<Persona> response;
 
     @Autowired
-    PersonaService personaService;
+    private PersonaService personaService;
 
     @GetMapping("/todo")
     public List<Persona> listar(){

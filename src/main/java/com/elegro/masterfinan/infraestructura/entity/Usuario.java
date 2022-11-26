@@ -14,6 +14,24 @@ public class Usuario {
     protected Integer tipoIdentificacion;
     protected List<Compra> compras;
     protected List<Transaccion> transacciones;
+    protected String email;
+    protected boolean terminos_condiciones;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isTerminos_condiciones() {
+        return terminos_condiciones;
+    }
+
+    public void setTerminos_condiciones(boolean terminos_condiciones) {
+        this.terminos_condiciones = terminos_condiciones;
+    }
 
     public Long getId() {
         return id;

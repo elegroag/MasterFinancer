@@ -17,10 +17,10 @@ import java.util.Optional;
 public class PagosController {
 
     @Autowired
-    ResponseApi<Pago> response;
+    private ResponseApi<Pago> response;
 
     @Autowired
-    PagoService pagoService;
+    private PagoService pagoService;
 
     @GetMapping("/todo")
     public List<Pago> listarPagos(){

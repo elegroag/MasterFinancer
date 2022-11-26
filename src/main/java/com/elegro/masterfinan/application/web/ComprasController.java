@@ -22,16 +22,16 @@ import java.util.*;
 public class ComprasController {
 
     @Autowired
-    ResponseApi<Compra> response;
+    private ResponseApi<Compra> response;
     @Autowired
-    CompraService compraService;
+    private CompraService compraService;
     @Autowired
-    TransaccionService transaccionService;
+    private TransaccionService transaccionService;
     @Autowired
-    PagoService pagoService;
+    private PagoService pagoService;
 
     @Autowired
-    CompraDetalleService compraDetalleService;
+    private CompraDetalleService compraDetalleService;
 
     @GetMapping("/todo")
     public List<Compra> listarCompras(){
