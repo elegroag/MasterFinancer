@@ -53,7 +53,7 @@ public class AuthController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
             UserDetails userDetails = masterUserDetailsService.loadUserByUsername(request.getUsername());
             String jwt = jwtUtil.generateToken(userDetails);
-            return new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
+            return new ResponseEntity<>(new AuthenticationResponse(jwt, true, "Ok bienvenido ahora puedes hacer uso del token."), HttpStatus.OK);
         } catch (BadCredentialsException err){
             System.out.println(err.getMessage());
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

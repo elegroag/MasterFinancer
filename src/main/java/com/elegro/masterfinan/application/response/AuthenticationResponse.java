@@ -28,6 +28,13 @@ public class AuthenticationResponse {
     }
     public AuthenticationResponse(){}
 
+
+    public AuthenticationResponse(String jwt, boolean status, String msj){
+        this.jwt = jwt;
+        this.message = msj;
+        this.success = status;
+    }
+
     public String getJwt() {
         return jwt;
     }
