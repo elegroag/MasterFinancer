@@ -5,7 +5,7 @@ public class Ciudad {
 
     private Integer id;
     private String nombreCiudad;
-    private String departamento;
+    private Integer departamento;
 
     public Integer getId() {
         return id;
@@ -23,11 +23,11 @@ public class Ciudad {
         this.nombreCiudad = nombreCiudad;
     }
 
-    public String getDepartamento() {
+    public Integer getDepartamento() {
         return departamento;
     }
 
-    public void setDepartamento(String departamento) {
+    public void setDepartamento(Integer departamento) {
         this.departamento = departamento;
     }
 }

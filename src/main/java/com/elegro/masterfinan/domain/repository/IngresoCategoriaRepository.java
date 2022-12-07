@@ -1,6 +1,7 @@
 package com.elegro.masterfinan.domain.repository;
 
 import com.elegro.masterfinan.infraestructura.cruds.IngresoCategoriaDaoRepository;
+import com.elegro.masterfinan.infraestructura.entity.GastoCategoria;
 import com.elegro.masterfinan.infraestructura.entity.IngresoCategoria;
 
 import java.sql.Connection;
@@ -10,11 +11,11 @@ import java.sql.SQLException;
 
 public class IngresoCategoriaRepository extends AbsRecordLong<IngresoCategoria> implements IngresoCategoriaDaoRepository {
 
-    private static final String SQL_SELECT = "SELECT id, nombres, apellidos, username, password, saldo, tipo_identificacion FROM ingreso_categorias WHERE 1;";
+    private static final String SQL_SELECT = "SELECT id, detalle, esfijo FROM ingreso_categorias WHERE 1;";
 
-    private static final String SQL_INSERT = "INSERT INTO ingreso_categorias (id, nombres, apellidos, username, password, saldo, tipo_identificacion)VALUES (?, ?, ?, ?, ?, ?, ?);";
+    private static final String SQL_INSERT = "INSERT INTO ingreso_categorias (detalle, esfijo)VALUES (?, ?);";
 
-    private static final String SQL_UPDATE = "UPDATE ingreso_categorias SET nombres=? , apellidos=?, username=?, password=?, saldo=?, tipo_identificacion=? WHERE id=?;";
+    private static final String SQL_UPDATE = "UPDATE ingreso_categorias SET detalle=?, esfijo=? WHERE id=?;";
 
     private static final String SQL_DELETE = "DELETE FROM ingreso_categorias WHERE id=?;";
 
@@ -22,7 +23,7 @@ public class IngresoCategoriaRepository extends AbsRecordLong<IngresoCategoria> 
         this.connectionTransactional = conn;
         this.table = "ingreso_categorias";
         this.primaryKey = "id";
-        this.fillable = new String[] { "id", "nombres", "apellidos", "username", "password", "saldo", "tipo_identificacion"};
+        this.fillable = new String[] { "id", "detalle", "esfijo"};
         this.query.put("SQL_SELECT", SQL_SELECT);
         this.query.put("SQL_INSERT", SQL_INSERT);
         this.query.put("SQL_UPDATE", SQL_UPDATE);
@@ -31,21 +32,30 @@ public class IngresoCategoriaRepository extends AbsRecordLong<IngresoCategoria> 
 
     @Override
     public IngresoCategoria recordModel(ResultSet rs) throws SQLException {
-        return null;
+        IngresoCategoria ingresoCategoria = new IngresoCategoria();
+        ingresoCategoria.setDetalle(rs.getString("detalle"));
+        ingresoCategoria.setEsfijo(rs.getInt("esfijo") == 1);
+        return ingresoCategoria;
     }
 
     @Override
-    public Integer prepareModel(PreparedStatement stmt, IngresoCategoria use) throws SQLException {
-        return null;
+    public Integer prepareModel(PreparedStatement stmt, IngresoCategoria ingresoCategoria) throws SQLException {
+        stmt.setString(1, ingresoCategoria.getDetalle());
+        stmt.setBoolean(2, ingresoCategoria.getEsfijo());
+        return stmt.executeUpdate();
     }
 
     @Override
-    public Integer prepareUpdate(PreparedStatement stmt, IngresoCategoria use) throws SQLException {
-        return null;
+    public Integer prepareUpdate(PreparedStatement stmt, IngresoCategoria ingresoCategoria) throws SQLException {
+        stmt.setString(1, ingresoCategoria.getDetalle());
+        stmt.setBoolean(2, ingresoCategoria.getEsfijo());
+        stmt.setLong(3, ingresoCategoria.getId());
+        return stmt.executeUpdate();
     }
 
     @Override
-    public Integer prepareDelete(PreparedStatement stmt, IngresoCategoria use) throws SQLException {
-        return null;
+    public Integer prepareDelete(PreparedStatement stmt, IngresoCategoria ingresoCategoria) throws SQLException {
+        stmt.setLong(1, ingresoCategoria.getId());
+        return stmt.executeUpdate();
     }
 }
