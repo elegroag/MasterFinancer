@@ -21,6 +21,8 @@ abstract class ManagerRepository {
     protected DepartamentoDaoRepository departamentos = null;
     protected CiudadDaoRepository ciudades = null;
 
+    protected TipoIdentificacionDaoRepository tipoIdentificaciones = null;
+
     public abstract UsuarioDaoRepository entityUsuario();
     public abstract PersonaDaoRepository entityPersona();
     public abstract CompraDaoRepository entityCompra();
@@ -35,7 +37,7 @@ abstract class ManagerRepository {
     public abstract  PaisDaoRepository entityPais();
     public abstract  DepartamentoDaoRepository entityDepartamento();
     public abstract  CiudadDaoRepository entityCiudad();
-
+    public abstract  TipoIdentificacionDaoRepository entityTipoIndetificacion();
 
     protected Connection conn;
 }

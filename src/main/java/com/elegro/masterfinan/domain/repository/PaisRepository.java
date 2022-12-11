@@ -33,6 +33,7 @@ public class PaisRepository extends AbsRecordInteger<Pais> implements PaisDaoRep
     @Override
     public Pais recordModel(ResultSet rs) throws SQLException, DaoException {
         Pais pais = new Pais();
+        pais.setId(rs.getInt("id"));
         pais.setNombrePais(rs.getString("nombre_pais"));
         return pais;
     }

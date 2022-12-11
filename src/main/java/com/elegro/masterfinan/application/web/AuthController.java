@@ -8,6 +8,10 @@ import com.elegro.masterfinan.application.response.AuthenticationResponse;
 
 import com.elegro.masterfinan.domain.repository.Models;
 import com.elegro.masterfinan.domain.service.MasterUserDetailsService;
+import com.elegro.masterfinan.domain.service.PaisService;
+import com.elegro.masterfinan.domain.service.TipoIndetificationService;
+import com.elegro.masterfinan.infraestructura.entity.Pais;
+import com.elegro.masterfinan.infraestructura.entity.TipoIdentificacion;
 import com.elegro.masterfinan.infraestructura.entity.Usuario;
 import com.elegro.masterfinan.infraestructura.excepetion.DaoException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +22,12 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,6 +45,12 @@ public class AuthController {
 
     @Autowired
     private MasterUserDetailsService masterUserDetailsService;
+
+    @Autowired
+    private TipoIndetificationService tipoIndetificationService;
+
+    @Autowired
+    private PaisService paisService;
 
     @Autowired
     private JWTUtil jwtUtil;
@@ -139,5 +147,23 @@ public class AuthController {
             messages.put("tipo_documento"," Error el tipo documento es requerido para continuar");
         }
         return messages;
+    }
+
+    @GetMapping("/tipo_documentos")
+    private ResponseEntity<List<TipoIdentificacion>> getTipoIdentificacion(){
+        try {
+            return new ResponseEntity<>(tipoIndetificationService.listaTipos(), HttpStatus.OK);
+        } catch (Exception err){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/paises")
+    private ResponseEntity<List<Pais>> getNaciones(){
+        try {
+            return new ResponseEntity<>(paisService.listarPaises(), HttpStatus.OK);
+        } catch (Exception err){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 }

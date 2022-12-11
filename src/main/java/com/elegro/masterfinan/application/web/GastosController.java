@@ -13,22 +13,4 @@ public class GastosController {
 
         return "";
     }
-
-    @GetMapping("/borrar")
-    public String borrar(){
-
-        return "";
-    }
-
-    @GetMapping("/actualizar")
-    public String actualizar(){
-
-        return "";
-    }
-
-    @GetMapping("/buscar")
-    public String buscar(){
-
-        return "";
-    }
 }

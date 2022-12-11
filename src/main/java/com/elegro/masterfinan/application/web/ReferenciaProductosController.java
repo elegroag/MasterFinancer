@@ -34,6 +34,7 @@ public class ReferenciaProductosController {
             response.setData(Optional.of(_referenciaProducto));
             return response;
         }).orElseGet(() -> {
+            assert response != null;
             response.setSuccess(false);
             response.setMessage("Error el registro no es posible");
             response.setData(Optional.empty());

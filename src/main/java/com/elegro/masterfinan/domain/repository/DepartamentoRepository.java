@@ -33,6 +33,7 @@ public class DepartamentoRepository extends AbsRecordInteger<Departamento> imple
     @Override
     public Departamento recordModel(ResultSet rs) throws SQLException, DaoException {
         Departamento departamento = new Departamento();
+        departamento.setId(rs.getInt("id"));
         departamento.setNombreDepartamento(rs.getString("nombre_departamento"));
         departamento.setPais(rs.getInt("pais"));
         return departamento;

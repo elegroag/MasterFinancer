@@ -33,6 +33,7 @@ public class CiudadRepository extends AbsRecordInteger<Ciudad> implements Ciudad
     @Override
     public Ciudad recordModel(ResultSet rs) throws SQLException, DaoException {
         Ciudad ciudad = new Ciudad();
+        ciudad.setId(rs.getInt("id"));
         ciudad.setNombreCiudad(rs.getString("nombre_ciudad"));
         ciudad.setDepartamento(rs.getInt("departamento"));
         return ciudad;

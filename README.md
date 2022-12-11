@@ -63,12 +63,6 @@ http://localhost:8090/master-financer/api/auth/registration
     "documento": x-x-x-x,
     "email": "x-x-x-x-x-@-x-x-x.com"
 }
-
-Tipo documentos:
-1 CC  Cedula Ciudadania
-2 CE  Cedula Extranjeria
-3 TI  Tarjeta De Identidad
-4 NIT Número de identificación Tributaria
 ```` 
 
 Solicitud de Token  
@@ -133,3 +127,39 @@ http://localhost:8090/master-financer/api/compras/todo
 
 Pago Buscar Un Recurso Pasando Parametro Id  
 http://localhost:8090/master-financer/api/compras/buscar?id=4   
+
+
++ Personas
+
+Listar todas los terceros, proveedores y clientes
+http://localhost:8090/master-financer/api/personas/todo  
+
+Registrar un tercero  
+http://localhost:8090/master-financer/api/personas/crear
+
++ Productos De Referencia
+
+Listar los productos de referecia para las compras
+http://localhost:8090/master-financer/api/referencia_productos/todo
+
+Registrar productos de referenia
+http://localhost:8090/master-financer/api/referencia_productos/crear
+
+Borrar producto de referenia
+http://localhost:8090/master-financer/api/referencia_productos/borrar
+
+
+
++ Autenticación y Registro:
+
+Registro de usuarios nuevos
+http://localhost:8090/master-financer/api/auth/registration  
+
+Crear token  
+http://localhost:8090/master-financer/api/auth/authenticate  
+
+Listar tipos de documentos  para el registro  
+http://localhost:8090/master-financer/api/auth/tipo_documentos  
+
+Listar paises para el registro  
+http://localhost:8090/master-financer/api/auth/paises  

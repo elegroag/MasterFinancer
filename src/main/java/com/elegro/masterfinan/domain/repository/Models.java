@@ -125,4 +125,12 @@ public class Models extends ManagerRepository {
         }
         return ciudades;
     }
+
+    @Override
+    public TipoIdentificacionDaoRepository entityTipoIndetificacion() {
+        if(tipoIdentificaciones == null){
+            tipoIdentificaciones = new TipoIdentificacionRepository(conn);
+        }
+        return tipoIdentificaciones;
+    }
 }
