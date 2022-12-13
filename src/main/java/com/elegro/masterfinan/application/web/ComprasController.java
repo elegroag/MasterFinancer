@@ -110,6 +110,7 @@ public class ComprasController {
             response.setCodigo(200);
             return response;
         }).orElseGet(() -> {
+            assert response != null;
             response.setSuccess(false);
             response.setMessage("Error el registro no es posible");
             response.setCodigo(500);
