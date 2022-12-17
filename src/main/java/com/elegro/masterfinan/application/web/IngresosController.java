@@ -1,4 +1,4 @@
-package com.elegro.masterfinan.application;
+package com.elegro.masterfinan.application.web;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,25 +11,6 @@ public class IngresosController {
 
     @GetMapping("/crear")
     public String crear(){
-
-        return "";
-    }
-
-    @GetMapping("/borrar")
-    public String borrar(){
-
-        return "";
-    }
-
-    @GetMapping("/actualizar")
-    public String actualizar(){
-
-        return "";
-    }
-
-    @GetMapping("/buscar")
-    public String buscar(){
-
         return "";
     }
 }

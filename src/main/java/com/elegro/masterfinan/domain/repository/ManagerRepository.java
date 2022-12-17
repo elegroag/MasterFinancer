@@ -14,7 +14,14 @@ abstract class ManagerRepository {
     protected PagoDaoRepository pagos = null;
     protected GastoCategoriaDaoRepository gastoCategorias = null;
     protected IngresoCategoriaDaoRepository ingresoCategorias = null;
+    protected ReferenciaProductoDaoRepository referenciaProductos = null;
+    protected CompraDetalleDaoRepository compraDetalles = null;
+    protected GastoDaoRepository gastos = null;
+    protected PaisDaoRepository paises = null;
+    protected DepartamentoDaoRepository departamentos = null;
+    protected CiudadDaoRepository ciudades = null;
 
+    protected TipoIdentificacionDaoRepository tipoIdentificaciones = null;
 
     public abstract UsuarioDaoRepository entityUsuario();
     public abstract PersonaDaoRepository entityPersona();
@@ -24,6 +31,13 @@ abstract class ManagerRepository {
     public abstract PagoDaoRepository entityPagos();
     public abstract GastoCategoriaDaoRepository entityGastoCategorias();
     public abstract IngresoCategoriaDaoRepository entityIngresoCategorias();
+    public abstract  ReferenciaProductoDaoRepository entityReferenciaProducto();
+    public abstract CompraDetalleDaoRepository entityCompraDetalle();
+    public abstract GastoDaoRepository entityGasto();
+    public abstract  PaisDaoRepository entityPais();
+    public abstract  DepartamentoDaoRepository entityDepartamento();
+    public abstract  CiudadDaoRepository entityCiudad();
+    public abstract  TipoIdentificacionDaoRepository entityTipoIndetificacion();
 
     protected Connection conn;
 }

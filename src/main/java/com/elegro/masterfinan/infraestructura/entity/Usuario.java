@@ -14,6 +14,24 @@ public class Usuario {
     protected Integer tipoIdentificacion;
     protected List<Compra> compras;
     protected List<Transaccion> transacciones;
+    protected String email;
+    protected boolean terminos_condiciones;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isTerminos_condiciones() {
+        return terminos_condiciones;
+    }
+
+    public void setTerminos_condiciones(boolean terminos_condiciones) {
+        this.terminos_condiciones = terminos_condiciones;
+    }
 
     public Long getId() {
         return id;
@@ -85,5 +103,22 @@ public class Usuario {
 
     public void setTransacciones(List<Transaccion> transacciones) {
         this.transacciones = transacciones;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombres='" + nombres + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", saldo=" + saldo +
+                ", tipoIdentificacion=" + tipoIdentificacion +
+                ", compras=" + compras +
+                ", transacciones=" + transacciones +
+                ", email='" + email + '\'' +
+                ", terminos_condiciones=" + terminos_condiciones +
+                '}';
     }
 }

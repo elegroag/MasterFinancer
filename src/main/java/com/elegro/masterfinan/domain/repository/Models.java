@@ -77,4 +77,60 @@ public class Models extends ManagerRepository {
         }
         return ingresoCategorias;
     }
+
+    @Override
+    public ReferenciaProductoDaoRepository entityReferenciaProducto() {
+        if(referenciaProductos == null){
+            referenciaProductos = new ReferenciaProductoRepository(conn);
+        }
+        return referenciaProductos;
+    }
+
+    @Override
+    public CompraDetalleDaoRepository entityCompraDetalle() {
+        if(compraDetalles == null){
+            compraDetalles = new CompraDetalleRepository(conn);
+        }
+        return compraDetalles;
+    }
+
+    @Override
+    public GastoDaoRepository entityGasto() {
+        if(gastos == null){
+            gastos = new GastoRepository(conn);
+        }
+        return gastos;
+    }
+
+    @Override
+    public PaisDaoRepository entityPais() {
+        if(paises == null){
+            paises = new PaisRepository(conn);
+        }
+        return paises;
+    }
+
+    @Override
+    public DepartamentoDaoRepository entityDepartamento() {
+        if(departamentos == null){
+            departamentos = new DepartamentoRepository(conn);
+        }
+        return departamentos;
+    }
+
+    @Override
+    public CiudadDaoRepository entityCiudad() {
+        if(ciudades == null){
+            ciudades = new CiudadRepository(conn);
+        }
+        return ciudades;
+    }
+
+    @Override
+    public TipoIdentificacionDaoRepository entityTipoIndetificacion() {
+        if(tipoIdentificaciones == null){
+            tipoIdentificaciones = new TipoIdentificacionRepository(conn);
+        }
+        return tipoIdentificaciones;
+    }
 }
