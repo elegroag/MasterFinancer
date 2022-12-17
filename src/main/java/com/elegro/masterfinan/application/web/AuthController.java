@@ -161,7 +161,7 @@ public class AuthController {
     @GetMapping("/paises")
     private ResponseEntity<List<Pais>> getNaciones(){
         try {
-            return new ResponseEntity<>(paisService.listarPaises(), HttpStatus.OK);
+            return new ResponseEntity<>(paisService.listarPaises(), HttpStatus.ACCEPTED);
         } catch (Exception err){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

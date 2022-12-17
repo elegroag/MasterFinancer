@@ -62,4 +62,8 @@ public class UsuarioService {
             return Optional.empty();
         }
     }
+
+    public Optional<Usuario> buscarUsername(String username){
+        return models.entityUsuario().findByUsername(username);
+    }
 }
