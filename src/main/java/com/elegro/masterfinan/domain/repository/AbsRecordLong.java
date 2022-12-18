@@ -126,6 +126,7 @@ public abstract class AbsRecordLong<T> {
             }
         } catch (SQLException er) {
             MysqlConnector.exep(er);
+            throw new DaoException("Error en insert model "+ this.table +" "+ er.getMessage());
         }
         return use;
     }

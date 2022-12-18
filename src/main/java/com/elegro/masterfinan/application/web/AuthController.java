@@ -70,7 +70,7 @@ public class AuthController {
 
     @PostMapping("/registration")
     public ResponseEntity<AuthenticationResponse> registrationAuth(@RequestBody AuthRegistrationRequest request){
-        AuthenticationResponse authResponse = null;
+        AuthenticationResponse authResponse = new AuthenticationResponse();
         try {
             try {
                 Map<String, String> messages = validationRequire(request);
@@ -94,31 +94,26 @@ public class AuthController {
                 } else {
                     throw new DebugException("El usuario ya se encuentra registrado");
                 }
-                try {
-                    authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(_user.getUsername(), _user.getPassword()));
-                    UserDetails userDetails = new User(_user.getUsername(), "{noop}"+_user.getPassword(), new ArrayList<>());
-                    String jwt = jwtUtil.generateToken(userDetails);
-                    authResponse = new AuthenticationResponse(jwt);
-                    authResponse.setSuccess(true);
-                    authResponse.setMessage("Solicitud Ok");
-                    return new ResponseEntity<>(authResponse, HttpStatus.OK);
-                } catch (BadCredentialsException err){
-                    System.out.println(err.getMessage());
-                    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-                }
-            }catch (DebugException debug)
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(_user.getUsername(), _user.getPassword()));
+                UserDetails userDetails = new User(_user.getUsername(), "{noop}"+_user.getPassword(), new ArrayList<>());
+                String jwt = jwtUtil.generateToken(userDetails);
+                authResponse.setJwt(jwt);
+                authResponse.setSuccess(true);
+                authResponse.setMessage("Solicitud Ok");
+
+                return new ResponseEntity<>(authResponse, HttpStatus.OK);
+
+            }catch (BadCredentialsException | DebugException | DaoException debug)
             {
-                System.out.println(DebugException.getVariables());
-                authResponse = new AuthenticationResponse();
                 authResponse.setSuccess(false);
                 authResponse.setMessage(debug.getMessage());
                 return new ResponseEntity<>(authResponse, HttpStatus.FORBIDDEN);
-            } catch (DaoException e) {
-                throw new RuntimeException(e);
             }
         }catch (HttpClientErrorException.BadRequest err){
             System.out.println(err.getMessage());
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            authResponse.setSuccess(false);
+            authResponse.setMessage(err.getMessage());
+            return new ResponseEntity<>(authResponse, HttpStatus.FORBIDDEN);
         }
     }
 
